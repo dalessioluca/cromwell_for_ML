@@ -4,36 +4,41 @@ from utilities import sample_normal, kl_normal0_normal1
 from encoders_decoders import *
 
 
-CHECKPOINT = collections.namedtuple("checkpoint", "model optimizer history_dict epoch params_dict")
+CHECKPOINT = collections.namedtuple("checkpoint", "history_dict epoch params_dict")
 METRIC = collections.namedtuple("metric", "loss kl nll")
 INFERENCE = collections.namedtuple("inference", "reconstruction")
 
 
-def save_everything(path, model, optimizer, history_dict, epoch, params):
+def pretty_print_metrics(epoch, metric, is_train=True):
+    if is_train:
+        s = 'Train [epoch {0:4d}] loss={1[loss]:.6f}, kl={1[kl]:.6f}, nll={1[nll]:.6f}'.format(epoch,metric)
+    else:
+        s = 'Test  [epoch {0:4d}] loss={1[loss]:.6f}, kl={1[kl]:.6f}, nll={1[nll]:.6f}'.format(epoch,metric)
+    return s
+
+
+def save_everything(path, model, optimizer, history_dict, params_dict, epoch):
     torch.save({'epoch': epoch,
                 'model_state_dict': model.state_dict(),
                 'optimizer_state_dict': optimizer.state_dict(),
                 'history_dict': history_dict,
-                'param_dict': params}, path)
+                'param_dict': params_dict}, path)
 
 
-def load_everything(path, model=None, optimizer=None):
+def load_info(path, load_params=False, load_epoch=False, load_history=False):
     resumed = torch.load(path)
+    epoch = resumed['epoch'] if load_epoch else None
+    params_dict = resumed['params_dict'] if load_params else None
+    history_dict = resumed['history_dict'] if load_history else None
+    return CHECKPOINT(history_dict=history_dict, epoch=epoch, params_dict=params_dict)
 
-    params = resumed['params_dict']
-    epoch = resumed['epoch']
-    history_dict = resumed['history_dict']
 
-    if model is None:
-        model = VaeClass(params)
-    model.load_state_dict(resumed['model_state_dict'])
-    model.train()
-
-    if optimizer is None:
-        optimizer = instantiate_optimizer(model, params)
+def load_model_optimizer(path, model=None, optimizer=None):
+    resumed = torch.load(path)
+    if model is not None:
+        model.load_state_dict(resumed['model_state_dict'])
+    if optimizer is not None:
         optimizer.load_state_dict(resumed['optimizer_state_dict'])
-
-    return CHECKPOINT(model=model, optimizer=optimizer, history_dict=history_dict, epoch=epoch, params_dict=params)
 
 
 def instantiate_optimizer(model, params):
@@ -45,6 +50,17 @@ def instantiate_optimizer(model, params):
     else:
         raise Exception
     return optimizer
+
+
+def instantiate_scheduler(optimizer, params):
+    if params["training"]["scheduler_type"] == "step_LR":
+        scheduler = torch.optim.lr_scheduler.StepLR(optimizer,
+                                                    step_size=params["training"]["scheduler_step_size"],
+                                                    gamma=params["training"]["scheduler_gamma"],
+                                                    last_epoch=-1)
+    else:
+        raise Exception
+    return scheduler
 
 
 class VaeClass(torch.nn.Module):

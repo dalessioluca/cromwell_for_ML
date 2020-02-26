@@ -37,6 +37,20 @@ def reset_parameters(parent_module, verbose):
             pass
 
 
+def add_named_tuple_to_dictionary(namedtuple, dictionary, key_prefix=None):
+    with torch.no_grad():
+
+        for k, v in namedtuple.items():
+
+            new_k = k if key_prefix is None else key_prefix+k
+            try:
+                dictionary[new_k].append(v)
+            except KeyError:
+                dictionary[new_k] = [v]
+
+        return dictionary
+
+
 def sample_normal(mu, std, noisy_sampling):
     new_mu, new_std = broadcast_all(mu, std)
     if noisy_sampling:
