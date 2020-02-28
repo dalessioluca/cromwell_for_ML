@@ -1,18 +1,19 @@
 {
+    "use_local_machine" : true,
+
     "cloud" : {
       "__comment" : "cloud parameters",
       "VM_image" : "us.gcr.io/broad-dsde-methods/pyro@sha256:4c4745a22762852cf14263c537f645182df3557a1163527a3aaeca7e5da37b4225",
       "GPU_type" : "tesla_k80",
-      "bucket_with_data" : "ld-data-bucket",
-      "bucket_with_results": "ld-results-bucket",
-      "train_dataset" :  "fashionmnist_train",
-      "test_dataset" :  "fashionmnist_test"},
+      "results_folder": "gs://ld-results-bucket/fashionmnist_results",
+      "train_dataset" : "gs://ld-data-bucket/data/fashionmnist_train.pkl",
+      "test_dataset" : "gs://ld-data-bucket/data/fashionmnist_test.pkl"},
 
-    "run_type" : {
-      "__comment" : "restart or scratch",
-      "identifier" : "trial_1",
-      "from_scratch" : true,
-      "file_for_restart" : null},
+    "simulation" : {
+      "__comment" : "there are 3 types of runs: scratch resume pretrain",
+      "name" : "trial_v1",
+      "type" : "scratch",
+      "path_to_file" : null},
 
     "architecture" : {
       "__comment" : "parameters specifying the architecture of the model",
@@ -33,11 +34,12 @@
 
     "training" : {
       "__comment" : "parameter of the observation model",
-      "EPOCHS" : 100,
+      "EPOCHS" : 1,
       "TEST_FREQUENCY" : 5,
-      "WRITE_FREQUENCY" : 20,
+      "CHECKPOINT_FREQUENCY" : 20,
       "batch_size" : 64,
       "scheduler_is_active" : false,
+      "scheduler_type" : "step_LR",
       "scheduler_step_size" : 100,
       "scheduler_gamma" : 0.75}
 }

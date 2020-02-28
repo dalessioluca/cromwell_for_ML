@@ -130,12 +130,13 @@ def show_batch(images, n_col=4, n_padding=10, title=None, pad_value=1):
         images = images.cpu()
     grid = utils.make_grid(images, n_col, n_padding, normalize=True, range=(0.0, 1.0),
                            scale_each=False, pad_value=pad_value)
-
+        
     fig = plt.figure()
     plt.imshow(grid.detach().numpy().transpose((1, 2, 0)))
     if isinstance(title, str):
         plt.title(title)
     plt.close(fig)
+    fig.tight_layout()
     return fig
 
 
@@ -188,17 +189,15 @@ class DatasetInMemory(Dataset):
         return batch_iterator
 
     def check(self):
-        print("Dataset lenght:", self.__len__())
 
         imgs, labels = self.load(batch_size=8)
         title = "# labels =" + str(labels.cpu().numpy().tolist())
-        tmp_img = show_batch(imgs[:8], n_col=4, n_padding=4, title=title)
-
+        
+        print("Dataset lenght:", self.__len__())
         print("imgs.shape", imgs.shape)
         print("type(imgs)", type(imgs))
         print("imgs.device", imgs.device)
         print("torch.max(imgs)", torch.max(imgs))
         print("torch.min(imgs)", torch.min(imgs))
-        return tmp_img
-
-
+        
+        return show_batch(imgs, n_col=4, n_padding=4, title=title, pad_value=1)
