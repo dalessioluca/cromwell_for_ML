@@ -1,0 +1,11 @@
+{
+    "run_ml_with_wdl.train_data" : "gs://ld-data-bucket/data/fashionmnist_train.pkl",
+    "run_ml_with_wdl.test_data" : "gs://ld-data-bucket/data/fashionmnist_test.pkl",
+    "run_ml_with_wdl.checkpoint" : "gs://ld-results-bucket/ckpt/dummy.pkl",
+
+    "run_ml_with_wdl.bucket_output" : "gs://ld-results-bucket/",
+
+    "run_ml_with_wdl.notebook_name": "main.ipynb",
+    "run_ml_with_wdl.git_repo": "https://github.com/dalessioluca/cromwell_for_ML.git",
+    "run_ml_with_wdl.commit": "2f13fa6c7a7ffbe8f54d3089ed1eeb80d9968789"
+}

@@ -1,0 +1,35 @@
+{
+    "simulation" : {
+      "__comment" : "there are 3 types of runs: scratch resume pre_trained",
+      "manual_or_wdl" : "manual",
+      "output_dir" : "trial_v1",
+      "type" : "scratch"},
+
+    "architecture" : {
+      "__comment" : "parameters specifying the architecture of the model",
+      "dim_zwhat" : 25,
+      "width_input_image" : 28,
+      "ch_input_image" : 1},
+
+    "loss" : {
+      "__comment" : "parameter of the observation model",
+      "mse_sigma" : 0.1},
+
+    "optimizer" : {
+      "__comment" : "which optimizer to use",
+      "type" : "adam",
+      "lr" : 0.001,
+      "betas" : [0.9, 0.999],
+      "eps" : 1E-8},
+
+    "training" : {
+      "__comment" : "parameter of the observation model",
+      "EPOCHS" : 6,
+      "TEST_FREQUENCY" : 5,
+      "CHECKPOINT_FREQUENCY" : 20,
+      "batch_size" : 64,
+      "scheduler_is_active" : false,
+      "scheduler_type" : "step_LR",
+      "scheduler_step_size" : 100,
+      "scheduler_gamma" : 0.75}
+}
