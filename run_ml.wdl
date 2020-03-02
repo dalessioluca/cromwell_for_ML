@@ -8,7 +8,7 @@ task run_jupyter_notebook {
 
         String notebook_name = "main.ipynb"
         String git_repo
-        String commit
+        String commit_or_branch
         String bucket_output
     }
   
@@ -18,12 +18,13 @@ task run_jupyter_notebook {
      set -e
      git clone ~{git_repo} checkout
      cd checkout
-     git checkout ~{commit}
+     git checkout ~{commit_or_branch}
 
      #run the notebook
-     pip install matplotlib 
-     pip install jupyter_contrib_nbextensions
-     pip install moviepy
+     #pip install matplotlib
+     #pip install jupyter_contrib_nbextensions
+     #pip install moviepy
+     #jupyter nbconvert --ExecutePreprocessor.timeout=-1 --to=html --execute ~{notebook_name} --output main_output.html
      jupyter nbconvert --ExecutePreprocessor.timeout=-1 --to=html --execute ~{notebook_name} --output main_output.html
 
   }
@@ -51,9 +52,9 @@ workflow run_ml_with_wdl {
      File train_data
      File test_data
      File checkpoint
-     String notebook_name = "main.ipynb"
+     String notebook_name
      String git_repo
-     String commit
+     String commit_or_branch
      String bucket_output
   }
   
@@ -64,7 +65,7 @@ workflow run_ml_with_wdl {
         checkpoint = checkpoint,
         notebook_name = notebook_name,
         git_repo = git_repo,
-        commit = commit,
+        commit_or_branch = commit_or_branch,
         bucket_output = bucket_output
   }
 
