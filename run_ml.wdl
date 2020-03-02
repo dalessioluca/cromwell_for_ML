@@ -25,8 +25,8 @@ task run_jupyter_notebook {
      pip install matplotlib
      pip install jupyter_contrib_nbextensions
      jupyter nbconvert --ExecutePreprocessor.timeout=-1 --to=html --execute ~{notebook_name} --output main_output.html
-
   }
+
   output {
     File main_output_html = "main_output.html"
     Array[File] results = glob("*.json")
