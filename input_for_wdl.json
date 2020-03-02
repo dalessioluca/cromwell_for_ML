@@ -5,7 +5,7 @@
 
     "run_ml_with_wdl.bucket_output" : "gs://ld-results-bucket/",
 
-    "run_ml_with_wdl.notebook_name": "test.ipynb",
+    "run_ml_with_wdl.notebook_name": "test_v2.ipynb",
     "run_ml_with_wdl.git_repo": "https://github.com/dalessioluca/cromwell_for_ML.git",
     "run_ml_with_wdl.commit_or_branch": "master"
 }

@@ -6,7 +6,7 @@ task run_jupyter_notebook {
         File test_data
         File checkpoint
 
-        String notebook_name = "main.ipynb"
+        String notebook_name
         String git_repo
         String commit_or_branch
         String bucket_output
@@ -32,6 +32,7 @@ task run_jupyter_notebook {
     #Array[File] results = glob("*.json")
     File std_out = stdout()
     File std_err = stderr()
+    File my_log = "my.log"
   }
 
   runtime {
@@ -75,5 +76,6 @@ workflow run_ml_with_wdl {
     #Array[File] results_out = run_jupyter_notebook.results
     File std_out = run_jupyter_notebook.std_out
     File std_err = run_jupyter_notebook.std_err
+    File my_log = run_jupyter_notebook.my_log
   }
 }
