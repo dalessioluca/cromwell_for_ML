@@ -22,8 +22,8 @@ task run_jupyter_notebook {
 
      #run the notebook
      #pip install matplotlib
-     #pip install jupyter_contrib_nbextensions
      #pip install moviepy
+     pip install jupyter_contrib_nbextensions
      #jupyter nbconvert --ExecutePreprocessor.timeout=-1 --to=html --execute ~{notebook_name} --output main_output.html
      jupyter nbconvert --ExecutePreprocessor.timeout=-1 --to=html --execute ~{notebook_name} --output main_output.html
 
