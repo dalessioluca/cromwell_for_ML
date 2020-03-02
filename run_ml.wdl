@@ -29,7 +29,7 @@ task run_jupyter_notebook {
   }
   output {
     File main_output_html = "main_output.html"
-    Array[File] results = glob("results/*")
+    Array[File] results = glob("*.json")
   }
 
   runtime {
