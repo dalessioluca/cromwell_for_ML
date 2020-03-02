@@ -71,5 +71,6 @@ workflow run_ml_with_wdl {
   output {
     File html_out = run_jupyter_notebook.main_output_html
     Array[File] results_out = run_jupyter_notebook.results
+    File filtered = stdout()
   }
 }
