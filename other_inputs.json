@@ -1,7 +1,7 @@
 {
     "simulation" : {
       "__comment" : "there are 3 types of runs: scratch resume pre_trained",
-      "manual_or_wdl" : "manual",
+      "manual_or_wdl" : "wdl",
       "output_dir" : "trial_v1",
       "type" : "scratch"},
 

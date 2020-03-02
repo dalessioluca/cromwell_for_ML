@@ -7,5 +7,5 @@
 
     "run_ml_with_wdl.notebook_name": "main.ipynb",
     "run_ml_with_wdl.git_repo": "https://github.com/dalessioluca/cromwell_for_ML.git",
-    "run_ml_with_wdl.commit": "2f13fa6c7a7ffbe8f54d3089ed1eeb80d9968789"
+    "run_ml_with_wdl.commit": "9ca0fb46e83d8b69cbe4b27808df280079c4232a" 
 }
