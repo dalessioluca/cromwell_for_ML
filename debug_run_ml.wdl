@@ -27,17 +27,10 @@ task run_jupyter_notebook {
      echo $(ls)
 
      #run the notebook
-
-     #pip install moviepy
-     #pip install matplotlib
-     #pip install jupyter_contrib_nbextensions
-     #jupyter nbconvert --ExecutePreprocessor.timeout=-1 --to=html --execute ~{notebook_name} --output main.html
   }
 
   output {
     String str_out = read_string(stdout())
-    File html_out = "checkout_dir/main.html"
-    Array[File] results = glob("checkout_dir/results/*")
   }
 
   runtime {
@@ -77,8 +70,6 @@ workflow run_ml_with_wdl {
   }
 
   output {
-    File html_out = run_jupyter_notebook.html_out
-    Array[File] results_out = run_jupyter_notebook.results
     String str_out = run_jupyter_notebook.str_out
 
   }
