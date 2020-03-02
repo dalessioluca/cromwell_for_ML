@@ -31,7 +31,7 @@ task run_jupyter_notebook {
   }
 
   output {
-    String out = read_string(stdout())
+    String str_out = read_string(stdout())
     #File main_output_html = "main_output.html"
     #Array[File] results = glob("*.json")
     #File std_out = stdout()
