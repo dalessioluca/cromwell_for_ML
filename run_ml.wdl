@@ -20,19 +20,23 @@ task run_jupyter_notebook {
      cd checkout
      git checkout ~{commit_or_branch}
 
+     echo $PWD
+
      #run the notebook
      #pip install moviepy
-     pip install matplotlib
-     pip install jupyter_contrib_nbextensions
-     jupyter nbconvert --ExecutePreprocessor.timeout=-1 --to=html --execute ~{notebook_name} --output main_output.html
+
+     #pip install matplotlib
+     #pip install jupyter_contrib_nbextensions
+     #jupyter nbconvert --ExecutePreprocessor.timeout=-1 --to=html --execute ~{notebook_name} --output main_output.html
   }
 
   output {
+    String out = read_string(stdout())
     #File main_output_html = "main_output.html"
     #Array[File] results = glob("*.json")
-    File std_out = stdout()
-    File std_err = stderr()
-    File my_log = "my.log"
+    #File std_out = stdout()
+    #File std_err = stderr()
+    #File my_log = "my.log"
   }
 
   runtime {
@@ -74,8 +78,9 @@ workflow run_ml_with_wdl {
   output {
     #File html_out = run_jupyter_notebook.main_output_html
     #Array[File] results_out = run_jupyter_notebook.results
-    File std_out = run_jupyter_notebook.std_out
-    File std_err = run_jupyter_notebook.std_err
-    File my_log = run_jupyter_notebook.my_log
+    #File std_out = run_jupyter_notebook.std_out
+    #File std_err = run_jupyter_notebook.std_err
+    String str_out = run_jupyter_notebook.str_out
+    #File my_log = run_jupyter_notebook.my_log
   }
 }
