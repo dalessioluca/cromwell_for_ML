@@ -30,6 +30,7 @@ task run_jupyter_notebook {
   output {
     File main_output_html = "main_output.html"
     Array[File] results = glob("*.json")
+    File std_out = stdout()
   }
 
   runtime {
@@ -71,6 +72,6 @@ workflow run_ml_with_wdl {
   output {
     File html_out = run_jupyter_notebook.main_output_html
     Array[File] results_out = run_jupyter_notebook.results
-    File filtered = stdout()
+    File std_out = stdout()
   }
 }
