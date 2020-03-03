@@ -24,8 +24,12 @@ You:
 2. copy parameters.json somewhere in a google bucket
 3. edit wdl_inputs.json with the location of the file you just edited
 4. from your local machine run the command:
+
    cromshell submit luca.wdl  input_for_wdl.json
+
 5. enjoy! The progress and results can be retieved with the commands:
+
    a cromshell list -c -u
+   
    b cromshell metadata
 
