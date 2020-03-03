@@ -1,4 +1,14 @@
 {
-  "luca_workflow.parameters_json": "parameters.json"
+  "wdl.file_train" : "gs://ld-data-bucket/data/fashionmnist_train.pkl",
+  "wdl.file_test" : "gs://ld-data-bucket/data/fashionmnist_test.pkl",
+  "wdl.file_ckpt" : "gs://ld-results-bucket/ckpt/dummy.pkl",
+
+  "wdl.bucket_output" : "gs://ld-results-bucket",
+  "wdl.dir_output" : "trial_v1",
+
+  "wdl.notebook_name": "main.ipynb",
+  "wdl.git_repo": "https://github.com/dalessioluca/cromwell_for_ML.git",
+  "wdl.commit_or_branch": "master",
+  "wdl.input_json": "parameters.json"
 }
 

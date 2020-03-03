@@ -1,18 +1,4 @@
 {
-    "wdl.bucket_data" : "gs://ld-data-bucket",
-    "wdl.train_data" : "data/fashionmnist_train.pkl",
-    "wdl.test_data" : "data/fashionmnist_test.pkl",
-
-    "wdl.bucket_ckpt" : "gs://ld-results-bucket",
-    "wdl.file_ckpt" : "ckpt/dummy.pkl",
-
-    "wdl.bucket_output" : "gs://ld-results-bucket",
-    "wdl.dir_output" : "trial_v1",
-
-    "wdl.notebook_name": "main.ipynb",
-    "wdl.git_repo": "https://github.com/dalessioluca/cromwell_for_ML.git",
-    "wdl.commit_or_branch": "master",
-
     "simulation" : {
       "__comment" : "there are 3 types of runs: scratch resume pre_trained",
       "type" : "scratch"},
