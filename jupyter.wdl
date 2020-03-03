@@ -61,42 +61,38 @@ task run_jupyter {
         cd checkout_dir
         git checkout ~{commit_or_branch}
 
-        # copy everything except json files and wdl in the execution directory
+        # Copy from checkout_dir to execution_dir (except json files and wdl)
         cp -r ./* ../
         cd ..
-        rm ./*wdl ./*.json
+        rm ./*.wdl ./*.json
         echo $(ls)
-        # you are in the execution directory
 
         # Rename input_json to parameters.json
         # This is what the notebook is expecting
         mv ~{input_json} parameters.json
         echo $(ls)
-    }
 
         #run the notebook
-        #pip install moviepy
-        #pip install matplotlib
-        #pip install jupyter_contrib_nbextensions
-        #echo $(ls)
-        #jupyter nbconvert --ExecutePreprocessor.timeout=-1 --to=html --execute ~{notebook_name} --output main.html
+        jupyter nbconvert --ExecutePreprocessor.timeout=-1 --to=html --execute ~{notebook_name} --output main.html
+    }
+
 
     runtime {
-        docker: "python"
-        #docker: "us.gcr.io/broad-dsde-methods/luca_pyro"
-        #bootDiskSizeGb: 50
-        #memory: "15G"
-        #cpu: 4
-        #zones: "us-east1-d us-east1-c us-central1-a us-central1-c us-west1-b"
-        #gpuCount: 1
-        #gpuType: "nvidia-tesla-k80"
-        #maxRetries: 0
+        #docker: "python"
+        docker: "us.gcr.io/broad-dsde-methods/luca_pyro"
+        bootDiskSizeGb: 50
+        memory: "15G"
+        cpu: 4
+        zones: "us-east1-d us-east1-c us-central1-a us-central1-c us-west1-b"
+        gpuCount: 1
+        gpuType: "nvidia-tesla-k80"
+        maxRetries: 0
     }
 
     output {
-        File std_out = stdout()
-        #File html_out = "main.html"
-        #Array[File] results = glob("~{dir_output}/*")
+        #File std_out = stdout()
+        File html_out = "main.html"
+        Array[File] results = glob("~{dir_output}/*")
     }
 }
 
@@ -130,8 +126,8 @@ workflow jupyter_workflow {
  }
 
  output {
-    File out = run_jupyter.std_out
-    #File html_out = run_jupyter.html_out
-    #Array[File] results = run_jupyter.results
+    #File out = run_jupyter.std_out
+    File html_out = run_jupyter.html_out
+    Array[File] results = run_jupyter.results
  }
 }
