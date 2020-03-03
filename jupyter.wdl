@@ -59,21 +59,18 @@ task run_jupyter {
         set -e
         git clone ~{git_repo} ./checkout_dir
         cd checkout_dir
+        git checkout ~{commit_or_branch}
 
-        if [ "~{commit_or_branch}" != "master" ]; then
-            git checkout ~{commit_or_branch}
-        fi
-
+        # copy everything except json files and wdl in the execution directory
         cp -r ./* ../
         cd ..
+        rm ./*wdl ./*.json
         echo $(ls)
         # you are in the execution directory
 
-        # (if necessary) rename input_json to parameters.json
+        # Rename input_json to parameters.json
         # This is what the notebook is expecting
-        if [ "~{input_json}" != "parameters.json" ]; then
-            mv ~{input_json} parameters.json
-        fi
+        mv ~{input_json} parameters.json
         echo $(ls)
     }
 
