@@ -5,7 +5,7 @@ version 1.0
 
 task parse_json {
     input {
-            File input_json
+            Map[String,String] input_json
             String pattern
            }
 
@@ -60,22 +60,19 @@ task run_jupyter {
         git clone ~{git_repo} ./checkout_dir
         cd checkout_dir
         git checkout ~{commit_or_branch}
-        cp -r ./checkout_dir/* ../
+        cp -r ./checkout_dir ../
         cd ..
-        echo $(ls)
         # you are in the execution directory
 
         # (if necessary) rename input_json to parameters.json
         # This is what the notebook is expecting
-        if ~{input_json} != parameters.json:
+        if ~{input_json} != "parameters.json":
             mv ~{input_json} parameters.json
-        echo $(ls)
 
         #run the notebook
         pip install moviepy
         pip install matplotlib
         pip install jupyter_contrib_nbextensions
-        echo $(ls)
         jupyter nbconvert --ExecutePreprocessor.timeout=-1 --to=html --execute ~{notebook_name} --output main.html
     }
 
@@ -109,24 +106,26 @@ workflow jupyter_workflow {
         pattern = "wdl."
  }
 
- call run_jupyter {
-    input :
-        input_json = parameters_json,
-
-        file_train = parse_json.output_map["wdl.file_train"],
-        file_test = parse_json.output_map["wdl.file_test"],
-        file_ckpt = parse_json.output_map["wdl.file_ckpt"],
-
-        dir_output = parse_json.output_map["wdl.dir_output"],
-        bucket_output = parse_json.output_map["wdl.bucket_output"],
-
-        notebook_name = parse_json.output_map["wdl.notebook_name"],
-        git_repo = parse_json.output_map["wdl.git_repo"],
-        commit_or_branch = parse_json.output_map["wdl.commit_or_branch"]
- }
+# call run_jupyter {
+#    input :
+#        input_json = parameters_json,
+#
+#        file_train = parse_json.output_map["wdl.file_train"],
+#        file_test = parse_json.output_map["wdl.file_test"],
+#        file_ckpt = parse_json.output_map["wdl.file_ckpt"],
+#
+#        dir_output = parse_json.output_map["wdl.dir_output"],
+#        bucket_output = parse_json.output_map["wdl.bucket_output"],
+#
+#        notebook_name = parse_json.output_map["wdl.notebook_name"],
+#        git_repo = parse_json.output_map["wdl.git_repo"],
+#        commit_or_branch = parse_json.output_map["wdl.commit_or_branch"]
+# }
 
  output {
-    File html_out = run_jupyter.html_out
-    Array[File] results = run_jupyter.results
+    #File html_out = run_jupyter.html_out
+    #Array[File] results = run_jupyter.results
+    Map out = read_json.output_map
+
  }
 }

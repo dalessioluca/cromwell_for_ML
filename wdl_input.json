@@ -1,4 +1,4 @@
 {
-  "jupyter_workflow.parameters_json": "File"
+  "jupyter_workflow.parameters_json": "gs://ld-results-bucket/input_jsons/parameters.json"
 }
 
