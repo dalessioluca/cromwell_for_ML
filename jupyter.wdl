@@ -79,7 +79,9 @@ task run_jupyter {
 
     runtime {
         #docker: "python"
-        docker: "us.gcr.io/broad-dsde-methods/luca_pyro"
+        #docker: "pytorch/pytorch"
+        #docker: "us.gcr.io/broad-dsde-methods/luca_pyro"
+        docker: "us.gcr.io/broad-dsde-methods/pyro:1.2.1"
         bootDiskSizeGb: 50
         memory: "15G"
         cpu: 4
