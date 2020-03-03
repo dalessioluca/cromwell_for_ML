@@ -25,7 +25,7 @@ You:
 3. edit wdl_inputs.json with the location of the file you just edited
 4. from your local machine run the command:
 
-   cromshell submit luca.wdl  input_for_wdl.json
+   cromshell submit jupyter.wdl wdl_input.json 
 
 5. enjoy! The progress and results can be retieved with the commands:
 
