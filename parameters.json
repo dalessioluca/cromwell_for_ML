@@ -1,0 +1,50 @@
+{
+    "wdl.active" : false,
+
+    "wdl.bucket_data" : "gs://ld-data-bucket",
+    "wdl.train_data" : "data/fashionmnist_train.pkl",
+    "wdl.test_data" : "data/fashionmnist_test.pkl",
+
+    "wdl.bucket_output" : "gs://ld-results-bucket",
+    "wdl.output_dir" : "trial_v1",
+
+    "wdl.bucket_checkpoint" : "gs://ld-results-bucket",
+    "wdl.ckpt_file" : "ckpt/dummy.pkl",
+
+    "wdl.notebook_name": "main.ipynb",
+    "wdl.git_repo": "https://github.com/dalessioluca/cromwell_for_ML.git",
+    "wdl.commit_or_branch": "master",
+
+
+    "simulation" : {
+      "__comment" : "there are 3 types of runs: scratch resume pre_trained",
+      "type" : "scratch"},
+
+    "architecture" : {
+      "__comment" : "parameters specifying the architecture of the model",
+      "dim_zwhat" : 25,
+      "width_input_image" : 28,
+      "ch_input_image" : 1},
+
+    "loss" : {
+      "__comment" : "parameter of the observation model",
+      "mse_sigma" : 0.1},
+
+    "optimizer" : {
+      "__comment" : "which optimizer to use",
+      "type" : "adam",
+      "lr" : 0.001,
+      "betas" : [0.9, 0.999],
+      "eps" : 1E-8},
+
+    "training" : {
+      "__comment" : "parameter of the observation model",
+      "EPOCHS" : 1,
+      "TEST_FREQUENCY" : 5,
+      "CHECKPOINT_FREQUENCY" : 20,
+      "batch_size" : 64,
+      "scheduler_is_active" : false,
+      "scheduler_type" : "step_LR",
+      "scheduler_step_size" : 100,
+      "scheduler_gamma" : 0.75}
+}
