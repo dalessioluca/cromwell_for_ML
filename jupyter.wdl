@@ -59,7 +59,8 @@ task run_jupyter {
         set -e
         git clone ~{git_repo} ./checkout_dir
         cd checkout_dir
-        git checkout ~{commit_or_branch}
+        if ~{commit_or_branch} !- master:
+            git checkout ~{commit_or_branch}
         cp -r ./checkout_dir/* ../
         cd ..
         echo $(ls)
@@ -76,21 +77,23 @@ task run_jupyter {
         pip install matplotlib
         pip install jupyter_contrib_nbextensions
         echo $(ls)
-        jupyter nbconvert --ExecutePreprocessor.timeout=-1 --to=html --execute ~{notebook_name} --output main.html
     }
+        #jupyter nbconvert --ExecutePreprocessor.timeout=-1 --to=html --execute ~{notebook_name} --output main.html
 
     runtime {
-        docker: "us.gcr.io/broad-dsde-methods/pyro:1.2.1"
-        bootDiskSizeGb: 50
-        memory: "15G"
-        cpu: 4
-        zones: "us-east1-d us-east1-c us-central1-a us-central1-c us-west1-b"
-        gpuCount: 1
-        gpuType: "nvidia-tesla-k80"
-        maxRetries: 0
+        docker: "python"
+        #docker: "us.gcr.io/broad-dsde-methods/pyro:1.2.1"
+        #bootDiskSizeGb: 50
+        #memory: "15G"
+        #cpu: 4
+        #zones: "us-east1-d us-east1-c us-central1-a us-central1-c us-west1-b"
+        #gpuCount: 1
+        #gpuType: "nvidia-tesla-k80"
+        #maxRetries: 0
     }
 
     output {
+        File std_out = stdout()
         File html_out = "main.html"
         Array[File] results = glob("~{dir_output}/*")
     }
@@ -126,6 +129,7 @@ workflow jupyter_workflow {
  }
 
  output {
+    File out = run_jupyter.std_out
     File html_out = run_jupyter.html_out
     Array[File] results = run_jupyter.results
  }
