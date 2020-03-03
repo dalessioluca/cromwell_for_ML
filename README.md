@@ -1,6 +1,11 @@
 # cromwell_for_ML
 Examples of how to use cromwell to run ML model at scale 
 
+
+### STILL TO DO:
+delocalization saving on a desired bucket
+visualization using jupyter notebook
+
 ### File descirption
 1. main.ipynb -> jupyter notebook you want to run
 2. parameters.json -> all the parameters that the notebook needs to run
