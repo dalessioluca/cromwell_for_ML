@@ -59,19 +59,23 @@ task run_jupyter {
         set -e
         git clone ~{git_repo} ./checkout_dir
         cd checkout_dir
-    }
-        #if ~{commit_or_branch} !- master:
-        #    git checkout ~{commit_or_branch}
-        #cp -r ./checkout_dir/* ../
-        #cd ..
-        #echo $(ls)
+
+        if [ "~{commit_or_branch}" != "master" ]; then
+            git checkout ~{commit_or_branch}
+        fi
+
+        cp -r ./* ../
+        cd ..
+        echo $(ls)
         # you are in the execution directory
 
         # (if necessary) rename input_json to parameters.json
         # This is what the notebook is expecting
-        #if ~{input_json} != parameters.json:
-        #    mv ~{input_json} parameters.json
-        #echo $(ls)
+        if [ "~{input_json}" != "parameters.json" ]; then
+            mv ~{input_json} parameters.json
+        fi
+        echo $(ls)
+    }
 
         #run the notebook
         #pip install moviepy
