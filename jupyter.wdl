@@ -68,15 +68,15 @@ task run_jupyter {
 
         # (if necessary) rename input_json to parameters.json
         # This is what the notebook is expecting
-        if ~{input_json} != parameters.json:
-            mv ~{input_json} parameters.json
-        echo $(ls)
+        #if ~{input_json} != parameters.json:
+        #    mv ~{input_json} parameters.json
+        #echo $(ls)
 
         #run the notebook
-        pip install moviepy
-        pip install matplotlib
-        pip install jupyter_contrib_nbextensions
-        echo $(ls)
+        #pip install moviepy
+        #pip install matplotlib
+        #pip install jupyter_contrib_nbextensions
+        #echo $(ls)
     }
         #jupyter nbconvert --ExecutePreprocessor.timeout=-1 --to=html --execute ~{notebook_name} --output main.html
 
@@ -94,8 +94,8 @@ task run_jupyter {
 
     output {
         File std_out = stdout()
-        File html_out = "main.html"
-        Array[File] results = glob("~{dir_output}/*")
+        #File html_out = "main.html"
+        #Array[File] results = glob("~{dir_output}/*")
     }
 }
 
@@ -130,7 +130,7 @@ workflow jupyter_workflow {
 
  output {
     File out = run_jupyter.std_out
-    File html_out = run_jupyter.html_out
-    Array[File] results = run_jupyter.results
+    #File html_out = run_jupyter.html_out
+    #Array[File] results = run_jupyter.results
  }
 }
