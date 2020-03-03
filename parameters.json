@@ -9,7 +9,6 @@
   "wdl.notebook_name": "main.ipynb",
   "wdl.git_repo": "https://github.com/dalessioluca/cromwell_for_ML.git",
   "wdl.commit_or_branch": "master",
-  "wdl.input_json": "parameters.json",
 
   "simulation" : {
       "__comment" : "there are 3 types of runs: scratch resume pre_trained",

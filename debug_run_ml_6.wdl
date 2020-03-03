@@ -3,7 +3,7 @@ version 1.0
 # Note that cromshell will automatically localize file in the following way:
 # gs://ld-data-bucket/data/fashionmnist_test.pkl -> /cromwell_roo/data/fashionmnist_test.pkl
 
-task parse_input_json {
+task parse_json {
     input {
             File input_json
             String pattern
@@ -78,7 +78,6 @@ task run_jupyter {
         pip install matplotlib
         pip install jupyter_contrib_nbextensions
         jupyter nbconvert --ExecutePreprocessor.timeout=-1 --to=html --execute ~{notebook_name} --output main.html
-        mv main.html ~{dir_output}
     }
 
     runtime {
@@ -99,7 +98,7 @@ task run_jupyter {
 }
 
 
-workflow luca_workflow {
+workflow jupyter_workflow {
 
  input {
    File parameters_json
@@ -113,18 +112,18 @@ workflow luca_workflow {
 
  call run_jupyter {
     input :
-        params = parameters_json,
+        input_json = parameters_json,
 
-        file_train = parse_input_json.output_map["wdl.file_train"],
-        file_test = parse_input_json.output_map["wdl.file_test"],
-        file_ckpt = parse_input_json.output_map["wdl.file_ckpt"],
+        file_train = parse_json.output_map["wdl.file_train"],
+        file_test = parse_json.output_map["wdl.file_test"],
+        file_ckpt = parse_json.output_map["wdl.file_ckpt"],
 
-        dir_output = parse_input_json.output_map["wdl.dir_output"],
-        bucket_output = parse_input_json.output_map["wdl.bucket_output"],
+        dir_output = parse_json.output_map["wdl.dir_output"],
+        bucket_output = parse_json.output_map["wdl.bucket_output"],
 
-        notebook_name = parse_input_json.output_map["wdl.notebook_name"],
-        git_repo = parse_input_json.output_map["wdl.git_repo"],
-        commit_or_branch = parse_input_json.output_map["wdl.commit_or_branch"]
+        notebook_name = parse_json.output_map["wdl.notebook_name"],
+        git_repo = parse_json.output_map["wdl.git_repo"],
+        commit_or_branch = parse_json.output_map["wdl.commit_or_branch"]
  }
 
  output {
