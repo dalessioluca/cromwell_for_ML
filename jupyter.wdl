@@ -59,11 +59,12 @@ task run_jupyter {
         set -e
         git clone ~{git_repo} ./checkout_dir
         cd checkout_dir
-        if ~{commit_or_branch} !- master:
-            git checkout ~{commit_or_branch}
-        cp -r ./checkout_dir/* ../
-        cd ..
-        echo $(ls)
+    }
+        #if ~{commit_or_branch} !- master:
+        #    git checkout ~{commit_or_branch}
+        #cp -r ./checkout_dir/* ../
+        #cd ..
+        #echo $(ls)
         # you are in the execution directory
 
         # (if necessary) rename input_json to parameters.json
@@ -77,12 +78,11 @@ task run_jupyter {
         #pip install matplotlib
         #pip install jupyter_contrib_nbextensions
         #echo $(ls)
-    }
         #jupyter nbconvert --ExecutePreprocessor.timeout=-1 --to=html --execute ~{notebook_name} --output main.html
 
     runtime {
         docker: "python"
-        #docker: "us.gcr.io/broad-dsde-methods/pyro:1.2.1"
+        #docker: "us.gcr.io/broad-dsde-methods/luca_pyro"
         #bootDiskSizeGb: 50
         #memory: "15G"
         #cpu: 4
