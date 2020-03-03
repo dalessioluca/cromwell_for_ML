@@ -20,22 +20,24 @@ task parse_input_json {
 
         import json
 
-        # read the input json as a dictionary
-        new_dict = {}
+        # read the input json and write it back to have a copy
         with open("~{input_file}") as fp:
             my_dict = json.load(fp)
-            for k,v in my_dict.items():
-                if k.startswith("~{pattern}"):
-                    new_dict[k]=v
+        with open("all_params.json", 'w') as fp:
+            json.dump(my_dict, fp)
 
-        # set wdl.active to TRUE
-        new_dict["wdl.active"] = False
-        my_dict["wdl.active"] = False
+        # parse the dictionary for elements starting with wdl
+        # special treatment for files that need to be localized
+        new_dict = {}
+        for k,v in my_dict.items():
+            if k.startswith("wdl.") and not! (k.endswith("data") or k.endswith("ckpt")):
+                new_dict[k]=v
+        new_dict["wdl.train_data"] = my_dict["wdl.bucket_data"] + my_dict["wdl.train_data"]
+        new_dict["wdl.test_data"] = my_dict["wdl.bucket_data"] + my_dict["wdl.test_data"]
+        new_dict["wdl.file_ckpt"] = my_dict["wdl.bucket_ckpt"] + my_dict["wdl.file_ckpt"]
 
         # print to stdout and on file
         print(json.dumps(new_dict))
-        with open("all_params.json", 'w') as fp:
-            json.dump(my_dict, fp)
         CODE
         >>>
 
