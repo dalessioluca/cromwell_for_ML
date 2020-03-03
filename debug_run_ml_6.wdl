@@ -44,7 +44,7 @@ task parse_input_json {
 
 task run_jupyter {
     input {
-        File params
+        File input_json
 
         File file_train
         File file_test
@@ -68,11 +68,17 @@ task run_jupyter {
         cd ..
         # you are in the execution directory
 
+        # (if necessary) rename input_json to parameters.json
+        # This is what the notebook is expecting
+        if ~{input_json} != "parameters.json":
+            mv ~{input_json} parameters.json
+
         #run the notebook
         pip install moviepy
         pip install matplotlib
         pip install jupyter_contrib_nbextensions
         jupyter nbconvert --ExecutePreprocessor.timeout=-1 --to=html --execute ~{notebook_name} --output main.html
+        mv main.html ~{dir_output}
     }
 
     runtime {
