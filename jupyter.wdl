@@ -73,6 +73,9 @@ task run_jupyter {
         echo $(ls)
 
         #run the notebook
+        pip install moviepy
+        pip install matplotlib
+        pip install jupyter_contrib_nbextensions
         jupyter nbconvert --ExecutePreprocessor.timeout=-1 --to=html --execute ~{notebook_name} --output main.html
     }
 
