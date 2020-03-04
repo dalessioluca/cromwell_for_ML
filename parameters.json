@@ -33,7 +33,7 @@
 
     "training" : {
       "__comment" : "parameter of the observation model",
-      "EPOCHS" : 1,
+      "EPOCHS" : 51,
       "TEST_FREQUENCY" : 5,
       "CHECKPOINT_FREQUENCY" : 20,
       "batch_size" : 64,

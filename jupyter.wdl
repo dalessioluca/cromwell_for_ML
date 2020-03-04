@@ -60,17 +60,18 @@ task run_jupyter {
         git clone ~{git_repo} ./checkout_dir
         cd checkout_dir
         git checkout ~{commit_or_branch}
+        git log | head -1 > commit.txt
 
         # Copy from checkout_dir to execution_dir (except json files and wdl)
         cp -r ./* ../
         cd ..
         rm ./*.wdl ./*.json
-        echo $(ls)
+        # echo $(ls)
 
         # Rename input_json to parameters.json
         # This is what the notebook is expecting
         mv ~{input_json} parameters.json
-        echo $(ls)
+        # echo $(ls)
 
         #run the notebook
         pip install moviepy
@@ -96,6 +97,7 @@ task run_jupyter {
 
     output {
         #File std_out = stdout()
+        File commit = "commit.txt"
         File html_out = "main.html"
         Array[File] results = glob("~{dir_output}/*")
     }
@@ -132,6 +134,7 @@ workflow jupyter_workflow {
 
  output {
     #File out = run_jupyter.std_out
+    File commit = run_jupyter.commit
     File html_out = run_jupyter.html_out
     Array[File] results = run_jupyter.results
  }
