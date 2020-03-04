@@ -26,15 +26,22 @@ You:
 ### WDL Usage
 You:
 1. on local machine edit the parameters.json as desired
-2. copy parameters.json somewhere in a google bucket
-3. edit wdl_inputs.json with the location of the file you just edited
-4. from your local machine run the command:
+2. run the command:
 
-   cromshell submit jupyter.wdl wdl_input.json 
-
-5. enjoy! The progress and results can be retieved with the commands:
+   submit_wdl_workflow.sh jupyter.wdl parameters.json gs://ld-results-bucket/input_jsons
+   
+3. enjoy! The progress and results can be retieved with the commands:
 
    a cromshell list -c -u
    
    b cromshell metadata
 
+### Assumptions:
+You have installed: cromshell, BLABLA
+
+1. the jupyter notebook:
+   a. expect a file called parameters.json in the execution_dir
+   b. produce outputs in execution_dir/dir_output
+2. the file parameters.json:
+   a. has few entries named "wdl.xxx" with the parameters for the wdl workflow
+   b. has many opther parameters with arbitrary nested structure to be read by the jupyter notebook
