@@ -77,7 +77,8 @@ task run_jupyter {
         pip install moviepy
         pip install matplotlib
         pip install jupyter_contrib_nbextensions
-        jupyter nbconvert --ExecutePreprocessor.timeout=-1 --to=html --execute ~{notebook_name} --output main.html
+        out_html=$(echo ~{notebook_name} | sed 's/.ipynb/.html/') 
+	jupyter nbconvert --ExecutePreprocessor.timeout=-1 --to=html --execute ~{notebook_name} --output out_html
     }
 
 
@@ -98,7 +99,7 @@ task run_jupyter {
     output {
         #File std_out = stdout()
         File commit = "commit.txt"
-        File html_out = "main.html"
+        File html_out = "*.html"
         Array[File] results = glob("~{dir_output}/*")
     }
 }
