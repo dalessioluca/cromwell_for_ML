@@ -99,30 +99,30 @@ echo "Step2: crerating tmp.json with the inputs for the workflow"
 womtool inputs $WDL | awk -v RHS=$path_to_bucket_with_double_quotes '{if(NF>1) print $1 " " RHS ; else print $1}' > tmp.json
 
 
-# 3. run cromshell
-echo
-echo "Step3: run cromshell"
-cromshell submit $WDL tmp.json | tee tmp_out_from_cromshell  # with "tee" output is both to stdout and to file
-rm tmp.json
-
-
-# 4. copy the parameter file used into the cromshell directory
-echo
-echo "Step4: copy parameters.json into cromshell directory"
-CROMSHELL_CONFIG_DIR=${HOME}/.cromshell
-id_just_submitted=$(cat tmp_out_from_cromshell | awk -F"\"" '{print $4}')
-
-last_line_from_table=$( tail -1 "${CROMSHELL_CONFIG_DIR}/all.workflow.database.tsv")
-id_last_line=$(echo $last_line_from_table | awk '{print $3}')
-general_output_dir=$(echo $last_line_from_table | awk '{print $2}' | sed 's/https:\/\///')
-
-if [[ $id_just_submitted == *$id_last_line* ]]; then 
-   # This means that I have grabbed the right line from the table
-   output_dir="${CROMSHELL_CONFIG_DIR}/${general_output_dir}/${id_last_line}"
-   if [ -d $output_dir ]; then
-      # This means that the directory exists
-      cp $JSON $output_dir
-   fi	
-fi
-
-exit_with_success
+#### 3. run cromshell
+###echo
+###echo "Step3: run cromshell"
+###cromshell submit $WDL tmp.json | tee tmp_out_from_cromshell  # with "tee" output is both to stdout and to file
+###rm tmp.json
+###
+###
+#### 4. copy the parameter file used into the cromshell directory
+###echo
+###echo "Step4: copy parameters.json into cromshell directory"
+###CROMSHELL_CONFIG_DIR=${HOME}/.cromshell
+###id_just_submitted=$(cat tmp_out_from_cromshell | awk -F"\"" '{print $4}')
+###
+###last_line_from_table=$( tail -1 "${CROMSHELL_CONFIG_DIR}/all.workflow.database.tsv")
+###id_last_line=$(echo $last_line_from_table | awk '{print $3}')
+###general_output_dir=$(echo $last_line_from_table | awk '{print $2}' | sed 's/https:\/\///')
+###
+###if [[ $id_just_submitted == *$id_last_line* ]]; then 
+###   # This means that I have grabbed the right line from the table
+###   output_dir="${CROMSHELL_CONFIG_DIR}/${general_output_dir}/${id_last_line}"
+###   if [ -d $output_dir ]; then
+###      # This means that the directory exists
+###      cp $JSON $output_dir
+###   fi	
+###fi
+###
+###exit_with_success
