@@ -64,7 +64,7 @@ You:
    - cromshell status
    
 4. After sucessfull completion the results can be found:
-   - in the cormwell execution bucket: broad-methods-cromwell-exec-bucket-v47/jupyter_localize
+   - in the cromwell execution bucket: broad-methods-cromwell-exec-bucket-v47/jupyter_localize
    - in the output bucket if specified in the parameters.json: for example gs://ld-results-bucket
 
 ### Assumptions:
