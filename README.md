@@ -20,9 +20,9 @@ Type the following commands:
 4. git clone https://github.com/dalessioluca/cromwell_for_ML.git
 5. cd cromwell_for_ML
 6. edit the paramters.json file as necessary
-7. ./submit_wdl_workflow.sh
-   (the first time you will be promped to specify the Cromwell server. 
-    Type: https://cromwell-v47.dsde-methods.broadinstitute.org
+7. ./submit_wdl_workflow.sh \
+   (the first time you will be promped to specify the Cromwell server. \
+    Type: https://cromwell-v47.dsde-methods.broadinstitute.org \
     Then run the command again)
 
 ### File descirption
