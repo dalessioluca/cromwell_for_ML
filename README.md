@@ -33,7 +33,11 @@ Type the following commands:
 The end-user is responsible only of changing the jupyter notebook and the parameter file 
 
 
-### Manual Usage
+### Running Jupyter:
+
+Let's compare the manual workflow and the WDL empowered workflow:
+
+#### Manual Usage: 
 You:
 1. start a VM machine
 2. git pull the code from your repository
@@ -43,7 +47,7 @@ You:
 6. save the results into a google bucket
 7. turn off the VM machine
 
-### WDL Usage
+#### WDL Usage
 You:
 1. on local machine edit the parameters.json as desired
 2. run the command:\
