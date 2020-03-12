@@ -1,15 +1,15 @@
 # cromwell_for_ML
-This is a wrapper around cromwell and WDL to enable you to run ML model at scale.
+This is a wrapper around cromwell and WDL to enable you to run ML model at scale. \
 In particular it runs jupyter notebook on google VM automatically 
 
 # STILL TO DO:
 1. visualization using jupyter notebook \
 (Try to do during the code challenge week)
 
-2. Maybe improve delocalization saving on a desired bucket using gsutil 
+2. Maybe improve delocalization saving on a desired bucket using gsutil \
 (Not urgent but possible, just make docker with gsutil in it)
 
-3. Attach disk with data instead of localizing data from google bucket. 
+3. Attach disk with data instead of localizing data from google bucket. \
 (This is currently impossible. Even if you are root you can NOT run root command such as "sudo mount" unless the docker was launched with the special flag: "--cap-add=SYS_ADMIN". See https://stackoverflow.com/questions/36553617/how-do-i-mount-bind-inside-a-docker-container. My unsuccessful attempts are in the directory: MOUNT_DISK_NO_LOCALIZATION).  
 
 ### Installation
@@ -46,19 +46,17 @@ You:
 ### WDL Usage
 You:
 1. on local machine edit the parameters.json as desired
-2. run the command:
+2. run the command:\
+   submit_wdl_workflow.sh jupyter.wdl parameters.json gs://ld-results-bucket/input_jsons \
 
-   submit_wdl_workflow.sh jupyter.wdl parameters.json gs://ld-results-bucket/input_jsons
-
-   Here:
+   Here: 
    - jupyter.wdl is the file specifying the workflow and does not need to be changed
    - gs://ld-results-bucket/input_jsons is a bucket where the parameters file will be copied and the path_to_json will be passed to the workflow	
    
-3. enjoy! The progress and results can be retieved with the commands:
-
-   a cromshell list -c -u
-   
-   b cromshell metadata
+3. enjoy! The progress and results can be retieved with the commands: \
+   - cromshell list -c -u
+   - cromshell metadata
+   - cromshell status
 
 ### Assumptions:
 To make this thing work you must ensure that:
