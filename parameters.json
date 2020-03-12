@@ -1,4 +1,7 @@
 {
+  "wdl.alias" : "acbd",
+  "wdl.memo" : "this is the baseline run",
+  
   "wdl.file_train" : "gs://ld-data-bucket/data/fashionmnist_train.pkl",
   "wdl.file_test" : "gs://ld-data-bucket/data/fashionmnist_test.pkl",
   "wdl.file_ckpt" : "gs://ld-results-bucket/ckpt/dummy.pkl",
@@ -14,26 +17,26 @@
       "__comment" : "there are 3 types of runs: scratch resume pre_trained",
       "type" : "scratch"},
 
-    "architecture" : {
+  "architecture" : {
       "__comment" : "parameters specifying the architecture of the model",
       "dim_zwhat" : 25,
       "width_input_image" : 28,
       "ch_input_image" : 1},
 
-    "loss" : {
+  "loss" : {
       "__comment" : "parameter of the observation model",
       "mse_sigma" : 0.1},
 
-    "optimizer" : {
+  "optimizer" : {
       "__comment" : "which optimizer to use",
       "type" : "adam",
       "lr" : 0.001,
       "betas" : [0.9, 0.999],
       "eps" : 1E-8},
 
-    "training" : {
+  "training" : {
       "__comment" : "parameter of the observation model",
-      "EPOCHS" : 51,
+      "EPOCHS" : 6,
       "TEST_FREQUENCY" : 5,
       "CHECKPOINT_FREQUENCY" : 20,
       "batch_size" : 64,
