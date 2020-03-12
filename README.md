@@ -29,7 +29,8 @@ Type the following commands:
 1. submit_wdl_workflow.sh -> bash script which launches cromshell in a smart way
 2. jupyter.wdl -> workflow in wdl 
 3. main.ipynb -> example jupyter notebook you want to run
-3. parameters.json -> all the parameters that the notebook needs to run 
+3. parameters.json -> all the parameters that the notebook needs to run
+
 The end-user is responsible only of changing the jupyter notebook and the parameter file 
 
 
