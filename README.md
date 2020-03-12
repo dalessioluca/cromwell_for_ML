@@ -3,7 +3,7 @@ This is a wrapper around cromwell and WDL to enable you to run ML model at scale
 In particular it runs jupyter notebook on google VM automatically 
 
 # STILL TO DO:
-1. visualization using jupyter notebook 
+1. visualization using jupyter notebook \
 (Try to do during the code challenge week)
 
 2. Maybe improve delocalization saving on a desired bucket using gsutil 
