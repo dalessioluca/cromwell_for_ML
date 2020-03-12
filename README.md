@@ -51,16 +51,20 @@ You:
 You:
 1. on local machine edit the parameters.json as desired
 2. run the command:\
-   submit_wdl_workflow.sh jupyter.wdl parameters.json gs://ld-results-bucket/input_jsons \
+   submit_wdl_workflow.sh jupyter.wdl parameters.json gs://ld-results-bucket/input_jsons 
 
    Here: 
    - jupyter.wdl is the file specifying the workflow and does not need to be changed
    - gs://ld-results-bucket/input_jsons is a bucket where the parameters file will be copied and the path_to_json will be passed to the workflow	
    
-3. enjoy! The progress and results can be retieved with the commands: \
+3. enjoy! The progress and results can be retieved with the commands: 
    - cromshell list -c -u
    - cromshell metadata
    - cromshell status
+   
+4. After sucessfull completion the results can be found:
+   - in the cormwell execution bucket: broad-methods-cromwell-exec-bucket-v47/jupyter_localize
+   - in the output bucket if specified in the parameters.json: for example gs://ld-results-bucket
 
 ### Assumptions:
 To make this thing work you must ensure that:
