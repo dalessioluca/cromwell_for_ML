@@ -14,7 +14,7 @@
   "wdl.commit_or_branch": "master",
 
   "simulation" : {
-      "__comment" : "there are 3 types of runs: scratch resume pre_trained",
+      "__comment" : "there are 3 types of runs: scratch, resume, pre_trained",
       "type" : "scratch"},
 
   "architecture" : {

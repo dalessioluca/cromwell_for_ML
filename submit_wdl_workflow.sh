@@ -10,7 +10,7 @@
 
 # Define some defaults
 BUCKET=${BUCKET:-"gs://ld-results-bucket/input_jsons"}
-WDL=${WDL:-"jupyter_localize.wdl"}
+WDL=${WDL:-"jupyter.wdl"}
 JSON=${JSON:-"parameters.json"}
 SCRIPTNAME=$( echo $0 | sed 's#.*/##g' )
 HERE=${PWD}
