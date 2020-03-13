@@ -17,10 +17,11 @@ Type the following commands:
 1. conda create --name trial python=3.6
 2. conda activate trial
 3. conda install -c conda-forge cromwell
-4. git clone https://github.com/dalessioluca/cromwell_for_ML.git
-5. cd cromwell_for_ML
-6. edit the paramters.json file as necessary
-7. ./submit_wdl_workflow.sh \
+4. conda install -c conda-forge jq
+5. git clone https://github.com/dalessioluca/cromwell_for_ML.git
+6. cd cromwell_for_ML
+7. edit the paramters.json file as necessary
+8. ./submit_wdl_workflow.sh \
    (the first time you will be promped to specify the Cromwell server. \
     Type: https://cromwell-v47.dsde-methods.broadinstitute.org \
     Then run the command again)
