@@ -71,11 +71,11 @@ You:
 ### Assumptions:
 To make this thing work you must ensure that:
 
-1. the jupyter notebook:
-   a. expect a file called parameters.json in the execution_dir
+1. the jupyter notebook:\
+   a. expect a file called parameters.json in the execution_dir\
    b. produce outputs in execution_dir/dir_output
-2. the file parameters.json:
-   a. has few entries named "wdl.xxx" with the parameters for the wdl workflow
-	- if "wdl.alias" is present the cromshell run will get that alias
-	- if "wdl.bucket_output" is present the results will be copied from the default execution bucket to that bucket_output 
+2. the file parameters.json:\
+   a. has few entries named "wdl.xxx" with the parameters for the wdl workflow\
+	- if "wdl.alias" is present the cromshell run will get that alias\
+	- if "wdl.bucket_output" is present the results will be copied from the default execution bucket to that bucket_output \ 
    b. has many other parameters with arbitrary nested structure to be read by the jupyter notebook
