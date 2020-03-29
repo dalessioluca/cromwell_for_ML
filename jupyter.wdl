@@ -87,7 +87,7 @@ task run_jupyter_localize {
         #-----------------------------------------------#
         cp -r ./* ../
         cd ..
-        rm ./*.wdl ./*.json
+        rm -rf ./*.wdl ./*.json
         echo $(ls)
 
         #-----------------------------------------------#
@@ -118,36 +118,44 @@ task run_jupyter_localize {
         #-----------------------------------------------#
         # 5. prepare the run the notebook
         #-----------------------------------------------#
+        echo "just before running notebook this is what I see in the execution directory:"
+        echo $(ls)
+
         # REAL RUN
         #pip install matplotlib
         #pip install moviepy
         #pip install jupyter_contrib_nbextensions
-        echo "just before running notebook this is what I see in the execution directory:"
-        echo $(ls)
         jupyter nbconvert --ExecutePreprocessor.timeout=-1 --to=html --execute ~{notebook_name} --output notebook.html
+
+        # FAKE RUN
+        #mkdir -p ~{dir_output}
+        #touch notebook.html
+        #touch ~{dir_output}/trial.png
 
         # CHECK
         echo "in the output_directory there are:"
         echo $(ls ~{dir_output})
 
     >>>
-
-###    runtime {
-###        docker: "python"
-###        cpu: 1
-###        preemptible: 3
-###    }
-
+    
     runtime {
+        # USE THIS ONE FOR THE REAL RUN
         docker: "us.gcr.io/broad-dsde-methods/pyro_matplotlib:1.3.0"
         bootDiskSizeGb: 50
         memory: "15G"
         cpu: 4
-        zones: "us-east1-d us-east1-c us-central1-a us-central1-c us-west1-b"
+        zones: "us-east1-d us-east1-c"
         gpuCount: 1
         gpuType: "nvidia-tesla-k80"
         maxRetries: 0
     }
+
+###    runtime {
+###        # USE THIS ONE FOR THE FAKE RUN 
+###        docker: "python"
+###        cpu: 1
+###        preemptible: 3
+###    }
 
     output {
         File output_html = "notebook.html"
@@ -155,6 +163,8 @@ task run_jupyter_localize {
         Array[File] results = glob("~{dir_output}/*")
     }
 }
+
+
 
 
 workflow jupyter_localize {
