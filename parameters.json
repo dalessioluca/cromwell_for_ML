@@ -2,46 +2,26 @@
   "wdl.alias" : "acbd",
   "wdl.memo" : "this is the baseline run",
   
-  "wdl.file_train" : "gs://ld-data-bucket/data/fashionmnist_train.pkl",
-  "wdl.file_test" : "gs://ld-data-bucket/data/fashionmnist_test.pkl",
-  "wdl.file_ckpt" : "gs://ld-results-bucket/ckpt/dummy.pkl",
+  "wdl.file_train" : "gs://input_bucket_name/path_to_file/train_dataset.pkl",
+  "wdl.file_test" : "gs://input_bucket_name/path_to_file/test_dataset.pkl",
+  "wdl.file_ckpt" : "gs://input_bucket_name/path_to_file/ckp.pkl",
 
-  "wdl.bucket_output" : "gs://ld-results-bucket",
-  "wdl.dir_output" : "trial_v1",
+  "wdl.bucket_output" : "gs://output_bucket_name",
+  "wdl.dir_output" : "output",
 
   "wdl.notebook_name": "main.ipynb",
-  "wdl.git_repo": "https://github.com/dalessioluca/cromwell_for_ML.git",
+  "wdl.git_repo": "https://github.com/dalessioluca/linear_regression.git",
   "wdl.commit_or_branch": "master",
 
-  "simulation" : {
-      "__comment" : "there are 3 types of runs: scratch, resume, pre_trained",
-      "type" : "scratch"},
+  "example_params_1" : {
+    "__comment" : "add here any parameters for your simulation",
+    "N_MAX_EPOCHS" : 10,
+    "lr" :  1E-2,
+    "noise" : 0.2},
 
-  "architecture" : {
-      "__comment" : "parameters specifying the architecture of the model",
-      "dim_zwhat" : 25,
-      "width_input_image" : 28,
-      "ch_input_image" : 1},
-
-  "loss" : {
-      "__comment" : "parameter of the observation model",
-      "mse_sigma" : 0.1},
-
-  "optimizer" : {
-      "__comment" : "which optimizer to use",
-      "type" : "adam",
-      "lr" : 0.001,
-      "betas" : [0.9, 0.999],
-      "eps" : 1E-8},
-
-  "training" : {
-      "__comment" : "parameter of the observation model",
-      "EPOCHS" : 6,
-      "TEST_FREQUENCY" : 5,
-      "CHECKPOINT_FREQUENCY" : 20,
-      "batch_size" : 64,
-      "scheduler_is_active" : false,
-      "scheduler_type" : "step_LR",
-      "scheduler_step_size" : 100,
-      "scheduler_gamma" : 0.75}
+  "example_params_2" : {
+    "__comment" : "more parameters if needed",
+    "n_feature" : 1,
+    "n_hidden" : 10,
+    "n_output" : 1}
 }

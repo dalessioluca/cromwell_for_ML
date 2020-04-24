@@ -146,7 +146,7 @@ task run_jupyter_localize {
         cpu: 4
         zones: "us-east1-d us-east1-c"
         gpuCount: 1
-        gpuType: "nvidia-tesla-k80"
+        gpuType: "nvidia-tesla-k80" # "nvidia-tesla-p100" 
         maxRetries: 0
     }
 
