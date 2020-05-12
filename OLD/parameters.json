@@ -1,0 +1,27 @@
+{
+  "wdl.alias" : "acbd",
+  "wdl.memo" : "this is the baseline run",
+  
+  "wdl.file_train" : "gs://input_bucket_name/path_to_file/train_dataset.pkl",
+  "wdl.file_test" : "gs://input_bucket_name/path_to_file/test_dataset.pkl",
+  "wdl.file_ckpt" : "gs://input_bucket_name/path_to_file/ckp.pkl",
+
+  "wdl.bucket_output" : "gs://output_bucket_name",
+  "wdl.dir_output" : "output",
+
+  "wdl.notebook_name": "main.ipynb",
+  "wdl.git_repo": "https://github.com/dalessioluca/linear_regression.git",
+  "wdl.commit_or_branch": "master",
+
+  "example_params_1" : {
+    "__comment" : "add here any parameters for your simulation",
+    "N_MAX_EPOCHS" : 10,
+    "lr" :  1E-2,
+    "noise" : 0.2},
+
+  "example_params_2" : {
+    "__comment" : "more parameters if needed",
+    "n_feature" : 1,
+    "n_hidden" : 10,
+    "n_output" : 1}
+}

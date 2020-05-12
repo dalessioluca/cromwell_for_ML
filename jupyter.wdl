@@ -34,6 +34,9 @@ task parse_json {
 
     runtime {
         docker: "python"
+        bootDiskSizeGb: 10
+        zones: "us-east1-d us-east1-c"
+        memory: "1GiB"
         cpu: 1
         preemptible: 3
     }
@@ -87,13 +90,11 @@ task run_jupyter_localize {
         #-----------------------------------------------#
         cp -r ./* ../
         cd ..
-        rm -rf ./*.wdl ./*.json
         echo $(ls)
 
         #-----------------------------------------------#
         # 3. replace the commit hash in the input_json file and rename it to parameters.json
         # This is what the notebook is expecting
-        # Do this with python
         #-----------------------------------------------#
         python <<CODE
         import json
@@ -122,15 +123,7 @@ task run_jupyter_localize {
         echo $(ls)
 
         # REAL RUN
-        #pip install matplotlib
-        #pip install moviepy
-        #pip install jupyter_contrib_nbextensions
         jupyter nbconvert --ExecutePreprocessor.timeout=-1 --to=html --execute ~{notebook_name} --output notebook.html
-
-        # FAKE RUN
-        #mkdir -p ~{dir_output}
-        #touch notebook.html
-        #touch ~{dir_output}/trial.png
 
         # CHECK
         echo "in the output_directory there are:"
@@ -139,23 +132,28 @@ task run_jupyter_localize {
     >>>
     
     runtime {
-        # USE THIS ONE FOR THE REAL RUN
-        docker: "us.gcr.io/broad-dsde-methods/pyro_matplotlib:1.3.0"
-        bootDiskSizeGb: 50
-        memory: "15G"
-        cpu: 4
+        docker: "us.gcr.io/broad-dsde-methods/pyro_matplotlib:0.0.2"
+        bootDiskSizeGb: 10
+        memory: "10G"
+        cpu: 1
         zones: "us-east1-d us-east1-c"
-        gpuCount: 1
-        gpuType: "nvidia-tesla-k80" # "nvidia-tesla-p100" 
+        #gpuCount: 1
+        #gpuType: "nvidia-tesla-p100" #"nvidia-tesla-k80" 
         maxRetries: 0
+        preemptible_tries: 0
     }
-
-###    runtime {
-###        # USE THIS ONE FOR THE FAKE RUN 
-###        docker: "python"
-###        cpu: 1
-###        preemptible: 3
-###    }
+    
+#    runtime {
+#        docker: "us.gcr.io/broad-dsde-methods/pyro_matplotlib:0.0.2"
+#        bootDiskSizeGb: 50
+#        memory: "26G"
+#        cpu: 4
+#        zones: "us-east1-d us-east1-c"
+#        gpuCount: 1
+#        gpuType: "nvidia-tesla-p100" #"nvidia-tesla-k80" 
+#        maxRetries: 0
+#        preemptible_tries: 0
+#    }
 
     output {
         File output_html = "notebook.html"

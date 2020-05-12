@@ -11,7 +11,7 @@
 # Define some defaults
 BUCKET=${BUCKET:-"gs://ld-results-bucket/input_jsons"}
 WDL=${WDL:-"jupyter.wdl"}
-JSON=${JSON:-"parameters.json"}
+JSON=${JSON:-"parameters_for_wdl.json"}
 SCRIPTNAME=$( echo $0 | sed 's#.*/##g' )
 HERE=${PWD}
 
@@ -122,11 +122,11 @@ OUTPUT_BUCKET=$(cat $JSON | jq '.["wdl.bucket_output"]' | sed 's/"//g')
 if [ $? == 0 ]; then
    # I have sucesfully found the desired key
    use_option_file="yes"
-   echo "tmp_options.json is:"			       
+   echo "tmp_options.json is:"
    jq -n --arg output $OUTPUT_BUCKET '{"final_workflow_outputs_dir" : $output, 
-        			       "use_relative_output_paths" : "false",
-				       "final_workflow_log_dir": $output,
-				       "final_call_logs_dir": $output}' | tee tmp_options.json
+                                       "use_relative_output_paths" : "false",
+                                       "final_workflow_log_dir": $output,
+                                       "final_call_logs_dir": $output}' | tee tmp_options.json
 else 
    use_option_file="no"
 fi

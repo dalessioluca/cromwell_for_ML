@@ -1,0 +1,40 @@
+# create a persistent disk
+
+
+# 1. form CL
+gcloud beta compute disks create luca-small-persistent-disk --project broad-dsde-methods --type pd-standard --size 10GB --zone us-east1-d
+
+# 2. or from graphic interface 
+https://console.cloud.google.com/compute/disks
+
+
+# attach disk to a VM called "dsde-deep-learner-ldalessi" 
+
+
+
+gcloud beta compute ssh --zone "us-east1-d" "dsde-deep-learner-ldalessi" --project "broad-dsde-methods"
+
+gcloud compute instances detach-disk
+
+
+#-----------------------------------------------------------------------------
+# Sequence of commands for attaching, formatting, mounting, detaching, reattaching in read-only (ro) mode
+#-----------------------------------------------------------------------------
+
+(on laptop)
+gcloud compute instances attach-disk my-vm --disk my-disk --device-name my-disk --mode rw --zone us-central1-a
+gcloud --project broad-ml4cvd compute ssh my-vm --zone us-central1-a
+
+(on VM)
+ls -l /dev/disk/by-id
+sudo mkfs.ext4 -m 0 -F -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/sdd
+sudo mkdir -p /mnt/disks/my-disk
+sudo mount -o norecovery,discard,defaults /dev/sdd /mnt/disks/my-disk
+sudo umount /mnt/disks/my-disk
+
+(on laptop)
+gcloud compute instances detach-disk my-vm --disk my-disk --zone us-central1-a
+gcloud compute instances attach-disk my-vm --disk my-disk --device-name my-disk --mode ro --zone us-central1-a
+
+(on VM)
+sudo mount -o norecovery,discard,defaults /dev/sdd /mnt/disks/my-disk

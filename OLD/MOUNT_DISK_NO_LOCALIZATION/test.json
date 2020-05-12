@@ -1,0 +1,6 @@
+{
+  "wdl.persistent_disk" : "luca-small-persistent-disk",
+  "wdl.file_train" : "fashionmnist_train.pkl",
+  "wdl.file_test" : "fashionmnist_test.pkl"
+}
+
