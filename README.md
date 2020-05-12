@@ -19,20 +19,31 @@ Type the following commands:
 3. conda install -c conda-forge cromwell
 4. conda install -c conda-forge jq
 5. git clone https://github.com/dalessioluca/cromwell_for_ML.git
-6. cd cromwell_for_ML
-7. edit the paramters.json file as necessary
-8. ./submit_wdl_workflow.sh \
+
+### Sample run
+1. cd cromwell_for_ML
+2. ./submit_wdl_workflow.sh jupyter.wdl parameters_for_wdl.json gs://ld-results-bucket/input_jsons
    (the first time you will be promped to specify the Cromwell server. \
     Type: https://cromwell-v47.dsde-methods.broadinstitute.org \
     Then run the command again)
 
+### Usage
+1. Create a github repo similar to https://github.com/dalessioluca/fashion_mnist_vae.git. \
+   In particular the jupyter notebook:\
+   a. expect a file called parameters.json in the execution_dir\
+   b. produce outputs in execution_dir/dir_output
+2. modify the file parameters_for_wdl.json accordingly:\
+   a. has few entries named "wdl.xxx" with the parameters for the wdl workflow\
+	- if "wdl.alias" is present the cromshell run will get that alias\
+	- if "wdl.bucket_output" is present the results will be copied from the default execution bucket to that bucket_output 
+   
+   b. has many other parameters with arbitrary nested structure to be read by the jupyter notebook
+   
+
 ### File descirption
 1. submit_wdl_workflow.sh -> bash script which launches cromshell in a smart way
 2. jupyter.wdl -> workflow in wdl 
-3. main.ipynb -> example jupyter notebook you want to run
-3. parameters.json -> all the parameters that the notebook needs to run
-
-The end-user is responsible only of changing the jupyter notebook and the parameter file 
+3. parameters_for_wdl.json -> all the parameters that the notebook needs to run
 
 
 ### Running Jupyter:
@@ -51,12 +62,12 @@ You:
 
 #### WDL Usage
 You:
-1. on local machine edit the parameters.json as desired
+1. on local machine edit the parameters_for_wdl.json as desired
 2. run the command:\
-   submit_wdl_workflow.sh jupyter.wdl parameters.json gs://ld-results-bucket/input_jsons 
+   submit_wdl_workflow.sh jupyter.wdl parameters_for_wdl.json gs://ld-results-bucket/input_jsons 
 
    Here: 
-   - jupyter.wdl is the file specifying the workflow and does not need to be changed
+   - jupyter.wdl is the file specifying the workflow and does **not** need to be changed
    - gs://ld-results-bucket/input_jsons is a bucket where the parameters file will be copied and the path_to_json will be passed to the workflow	
    
 3. enjoy! The progress and results can be retieved with the commands: 
@@ -67,16 +78,3 @@ You:
 4. After sucessfull completion the results can be found:
    - in the cromwell execution bucket: broad-methods-cromwell-exec-bucket-v47/jupyter_localize
    - in the output bucket if specified in the parameters.json: for example gs://ld-results-bucket
-
-### Assumptions:
-To make this thing work you must ensure that:
-
-1. the jupyter notebook:\
-   a. expect a file called parameters.json in the execution_dir\
-   b. produce outputs in execution_dir/dir_output
-2. the file parameters.json:\
-   a. has few entries named "wdl.xxx" with the parameters for the wdl workflow\
-	- if "wdl.alias" is present the cromshell run will get that alias\
-	- if "wdl.bucket_output" is present the results will be copied from the default execution bucket to that bucket_output 
-   
-   b. has many other parameters with arbitrary nested structure to be read by the jupyter notebook
