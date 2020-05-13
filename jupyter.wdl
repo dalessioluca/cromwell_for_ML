@@ -135,13 +135,13 @@ task run_jupyter_localize {
     
     runtime {
         # USE THIS ONE FOR THE REAL RUN
-        docker: "us.gcr.io/broad-dsde-methods/pyro_matplotlib:1.3.0"
+        docker: "us.gcr.io/broad-dsde-methods/pyro_matplotlib:0.0.2"
         bootDiskSizeGb: 50
         memory: "15G"
         cpu: 4
         zones: "us-east1-d us-east1-c"
         gpuCount: 1
-        gpuType: "nvidia-tesla-k80" # "nvidia-tesla-p100" 
+        gpuType: "nvidia-tesla-p100" # "nvidia-tesla-k80" 
         maxRetries: 0
     }
 
