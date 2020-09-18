@@ -15,19 +15,20 @@ task train {
 
 
     command <<<
-       
+        apt-get install git
+        echo "Content of exectution dir"
+        echo $(ls)
+
         # 1. checkout the repo and the commit you want in the CHECKOUT_DIR
         set -e
         git clone ~{git_repo} ./checkout_dir
         cd checkout_dir
         git checkout ~{git_branch_or_commit}
-        git pull
 
         # 2. File are localized in the EXECUTION_DIR while code is in the CHECKOUT_DIR
         # Copy everything from checkout to execution dir
         cp -r ./* ../  # from CHECKOUT_DIR to EXECUTION_DIR
         cd ..          # move to EXECUTION_DIR
-        # rm -rf ./*.wdl ./*.json
         echo "Content of exectution dir"
         echo $(ls)
 
@@ -35,6 +36,12 @@ task train {
         name_credentials=$(basename ~{credentials_json})
         name_train=$(basename ~{data_train})
         name_test=$(basename ~{data_test})
+        
+        echo "----->"
+        echo ~{credentials_json}
+        echo $name_credentials
+        echo "----->"
+
         mv $name_train data_train.pt
         mv $name_test data_test.pt
         mv $name_credentials credentials.json
@@ -54,23 +61,23 @@ task train {
 
     >>>
     
-#    runtime {
-#          docker: "pytorch/pytorch"
-#          cpu: 1
-#          preemptible: 3
-#    }
-    
     runtime {
-         docker: "us.gcr.io/broad-dsde-methods/pyro_matplotlib:0.0.2"
-         bootDiskSizeGb: 50
-         memory: "26G"
-         cpu: 4
-         zones: "us-east1-d us-east1-c"
-         gpuCount: 1
-         gpuType: "nvidia-tesla-k80" #"nvidia-tesla-p100" 
-         maxRetries: 0
-         preemptible_tries: 0
+          docker: "python"
+          cpu: 1
+          preemptible: 3
     }
+    
+#    runtime {
+#         docker: "us.gcr.io/broad-dsde-methods/pyro_matplotlib:0.0.2"
+#         bootDiskSizeGb: 50
+#         memory: "26G"
+#         cpu: 4
+#         zones: "us-east1-d us-east1-c"
+#         gpuCount: 1
+#         gpuType: "nvidia-tesla-k80" #"nvidia-tesla-p100" 
+#         maxRetries: 0
+#         preemptible_tries: 0
+#    }
 
 }
 
