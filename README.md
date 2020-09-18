@@ -1,6 +1,16 @@
 # cromwell_for_ML
 This is a wrapper around cromwell and WDL to enable you to run ML model at scale. \
-In particular it runs jupyter notebook on google VM automatically 
+The basic idea is that:
+1. user has a git repository with code under development
+2. user has either a main.ipynb or a main.py which:
+	a. read the file ML_parameters.json with all the parameters for the training
+	b. load the data_train.pt with the training data
+	c. load the data_test.pt with the test data
+	d. is trained according to the parameters in ML_parameters.json
+3. in either the main.ipynb or a main.py the users has added few neptune log statement to store metric, parameters, etc...
+
+
+t runs jupyter notebook on google VM automatically 
 
 # STILL TO DO:
 1. visualization using jupyter notebook \
