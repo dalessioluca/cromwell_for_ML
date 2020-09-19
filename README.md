@@ -1,13 +1,37 @@
 # cromwell_for_ML
 This is a wrapper around cromwell and WDL to enable you to run ML model at scale. \
-The basic idea is that:
-1. user has a git repository with code under development
-2. user has either a main.ipynb or a main.py which:
-	a. read the file ML_parameters.json with all the parameters for the training
-	b. load the data_train.pt with the training data
-	c. load the data_test.pt with the test data
+
+# Use cases
+The user is developing a ML model and has an active git repository. 
+The users need to train multiple ML models and log their performance and continously improve the codebase.
+The solution is:
+1. use WDL and CROMWELL to manage the VMs (i.e. turn on/off), checkout the code from git repo
+2. use NEPTUNE to log all metrics and parameter of interest to a database which can be inspected both during and after training is completed
+
+In practice the solution is: 
+-> ./submit_neptune_ml.sh neptune_ml.wdl WDL_parameters.json ML_parameters.json
+
+where:
+1. submit_neptune_ml.sh is a wrapper around cromshell
+2. neptune_ml.wdl is a WDL which specify the following operation:
+	a. turn on/off VM machine
+	b. checkout the correct version of the code from the repository
+	c. launch the training of ML model
+3. WDL_parameters.json contains few parameter such the name of the git repository, and commit to use
+4. ML_parameters.json is a file with all the parameters necessary to specify the ML_model
+
+
+. This will basic idea is that:
+1. the user has a git repository with code under development
+2. the user has either a main.ipynb or a main.py which:
+	a. reads the file ML_parameters.json with all the parameters for the training
+	b. loads the data_train.pt with the training data
+	c. loads the data_test.pt with the test data
 	d. is trained according to the parameters in ML_parameters.json
-3. in either the main.ipynb or a main.py the users has added few neptune log statement to store metric, parameters, etc...
+3. in the main.ipynb or main.py the users has added few neptune log statement to store metric, parameters, etc...
+4. 
+
+
 
 
 t runs jupyter notebook on google VM automatically 
