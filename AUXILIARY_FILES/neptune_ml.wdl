@@ -46,7 +46,6 @@ task train {
         if [ ! -z $token ]; then 
             export NEPTUNE_API_TOKEN=$token
             pip install neptune-client 
-            pip install psutil
             python main.py 
         fi
     >>>

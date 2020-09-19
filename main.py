@@ -10,9 +10,6 @@
 # 4. numerical metrics 
 # 5. source code
 
-get_ipython().run_line_magic('load_ext', 'autoreload')
-get_ipython().run_line_magic('autoreload', '2')
-get_ipython().run_line_magic('matplotlib', 'inline')
 import matplotlib.pyplot as plt
 import torch
 import numpy
@@ -20,8 +17,6 @@ import neptune
 from MODULES.utilities import *
 from MODULES.vae_model import * 
 from MODULES.utilities_neptune import *
-#pip install psutil
-#pip install neptune-client
 
 # read the parameters
 params = load_json_as_dict("./ML_parameters.json")
@@ -35,13 +30,13 @@ exp = neptune.create_experiment(params=flatten_dict(params),
 # create the dataset and visualize them
 BATCH_SIZE = params["simulation"]["BATCH_SIZE"]
 
-train_loader = SpecialDataSet(img=load_obj("data_train.pt")[:1000],
+train_loader = SpecialDataSet(img=load_obj("data_train.pt"),
                               store_in_cuda=torch.cuda.is_available(),
                               shuffle=True,
                               drop_last=True,
                               batch_size=BATCH_SIZE)
 
-test_loader = SpecialDataSet(img=load_obj("data_test.pt")[:100],
+test_loader = SpecialDataSet(img=load_obj("data_test.pt"),
                              store_in_cuda=torch.cuda.is_available(),
                              shuffle=False,
                              drop_last=True,
@@ -123,7 +118,3 @@ exp.log_image("sample", tmp)
 
 # terminate the experiment
 exp.stop()
-
-
-
-
