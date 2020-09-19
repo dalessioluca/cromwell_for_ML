@@ -17,33 +17,32 @@ task train {
     command <<<
         echo "START --> Content of exectution dir"
         echo $(ls)
+        exec_dir=$(pwd)
+        echo "--> $exec_dir"
         
         # 1. checkout the repo in the EXCUTION DIRECTORY
+        # need to checkout in a different directory and then copy to execution directory
         set -e
         git clone ~{git_repo} ./checkout_dir
         cd ./checkout_dir
         git checkout ~{git_branch_or_commit}
-        cp -r ./* ../
-        cd ../
+        cp -r ./* $exec_dir/
+        cd $exec_dir
         echo "AFTER GIT --> Content of exectution dir"
         echo $(ls)
         
-        # 2. change change the file names to what the code expect 
-        name_ML_parameters=$(basename ~{ML_parameters})
-        name_credentials=$(basename ~{credentials_json})
-        name_train=$(basename ~{data_train})
-        name_test=$(basename ~{data_test})
-        echo "DEBUG" $name_test ~{data_test}
-
-        ln -s $name_ML_parameters ML_parameters.json
-        ln -s $name_train data_train.pt
-        ln -s $name_test data_test.pt
-        ln -s $name_credentials credentials.json
+        # 2. link the file which have been localized to the execution directory 
+        # and give them the name the main.py expects
+        ln -s ~{ML_parameters} ./ML_parameters.json
+        ln -s ~{data_train} ./data_train.pt
+        ln -s ~{data_test} ./data_test.pt
+        ln -s ~{credentials_json} ./credentials.json
         echo "AFTER CHANGING NAMES --> Content of exectution dir"
         echo $(ls)
 
         # 3. run python code only if credentials are correct
         token=$(cat credentials.json | jq .NEPTUNE_API_TOKEN)
+        echo $token
         if [ $token != 'null' ]; then 
             export NEPTUNE_API_TOKEN=$token
             pip install neptune-client 
