@@ -1,0 +1,36 @@
+{
+ "neptune_project" : "dalessioluca/cromwell",
+ 
+ "architecture" : {
+   "__comment" : "parameters specifying the architecture of the model",
+   "dim_z" : 25,
+   "width_input_image" : 28,
+   "ch_input_image" : 1},
+
+ "simulation" : {
+   "MAX_EPOCHS" : 500,
+   "TEST_FREQUENCY" : 50,
+   "CHECKPOINT_FREQUENCY" : 50,
+   "BATCH_SIZE" : 64},
+
+ "GECO_loss" : {
+   "__comment" : "if active=false use ELBO, else use GECO with Log-Likelihood threshold = n_pixels * n_channel * threshold",
+   "is_active" : true,
+   "factor_balance_range" : [0.1, 0.8, 0.9],
+   "target_mse" : [0.75, 1.0],
+   "fg_std" : 0.05},
+
+ "optimizer" : {
+   "__comment" : "which optimizer to use",
+   "type" : "adam",
+   "base_lr" : 0.001,
+   "betas" : [0.9, 0.999],
+   "base_lr_geco" : 0.001,
+   "betas_geco" : [0.9, 0.999],
+   "weight_decay" : 0.0,
+   "eps" : 1E-8,
+   "scheduler_is_active" : true,
+   "scheduler_type" : "step_LR",
+   "scheduler_step_size" : 500,
+   "scheduler_gamma" : 0.75}
+}     
