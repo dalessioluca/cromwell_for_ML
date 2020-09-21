@@ -25,7 +25,9 @@ params = load_json_as_dict("./ML_parameters.json")
 neptune.set_project(params["neptune_project"])
 
 exp = neptune.create_experiment(params=flatten_dict(params),
-                                upload_source_files=["./MODULES/vae_model.py"])
+                                upload_source_files=["./MODULES/vae_model.py"],
+                                upload_stdout=False,
+                                upload_stderr=False)
 
 # create the dataset and visualize them
 BATCH_SIZE = params["simulation"]["BATCH_SIZE"]

@@ -20,24 +20,21 @@ task train {
         echo "START --> Content of exectution dir"
         echo $(ls)
         
-        # 1. checkout the repo in the EXCUTION DIRECTORY
-        # need to checkout in a different directory and then copy to execution directory
+        # 1. checkout the repo in the checkout_dir
         set -e
         git clone ~{git_repo} ./checkout_dir
         cd ./checkout_dir
         git checkout ~{git_branch_or_commit}
-        cp -r ./* $exec_dir/
-        cd $exec_dir
-        echo "AFTER GIT --> Content of exectution dir"
+        echo "AFTER GIT --> Content of checkout dir"
         echo $(ls)
         
-        # 2. link the file which have been localized to the execution directory 
+        # 2. link the file which have been localized to the checkout_dir
         # and give them the name the main.py expects
         ln -s ~{ML_parameters} ./ML_parameters.json
         ln -s ~{data_train} ./data_train.pt
         ln -s ~{data_test} ./data_test.pt
         ln -s ~{credentials_json} ./credentials.json
-        echo "AFTER CHANGING NAMES --> Content of exectution dir"
+        echo "AFTER CHANGING NAMES --> Content of checkout dir"
         echo $(ls)
 
         # 3. run python code only if NEPTUNE credentials are found
@@ -45,7 +42,6 @@ task train {
         token=$(cat credentials.json | grep -o '"NEPTUNE_API_TOKEN"\s*:\s*"[^"]*"' | grep -o '"[^"]*"$')
         if [ ! -z $token ]; then 
             export NEPTUNE_API_TOKEN=$token
-            pip install neptune-client 
             python main.py 
         fi
     >>>
