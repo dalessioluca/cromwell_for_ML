@@ -6,6 +6,7 @@ from typing import Union, Optional, Callable, Tuple
 from .namedtuple import DIST
 from collections import OrderedDict
 import json
+import dill # better version of pickle
 from torch.distributions.utils import broadcast_all
 
 
@@ -49,17 +50,14 @@ def flatten_dict(dd, separator='_', prefix=''):
 def save_obj(obj, path):
     with open(path, 'wb') as f:
         torch.save(obj, f, 
-                pickle_module=<module 'pickle' from '/opt/conda/lib/python3.6/pickle.py'>,
+                pickle_module=dill,
                 pickle_protocol=2, 
                 _use_new_zipfile_serialization=True)
 
 
 def load_obj(path):
     with open(path, 'rb') as f:
-        return torch.load(f, 
-                pickle_module=<module 'pickle' from '/opt/conda/lib/python3.6/pickle.py'>,
-                pickle_protocol=2, 
-                _use_new_zipfile_serialization=True)
+        return torch.load(f, pickle_module=dill) 
 
 
 def load_json_as_dict(path):

@@ -9,8 +9,8 @@
 
  "simulation" : {
    "MAX_EPOCHS" : 500,
-   "TEST_FREQUENCY" : 5,
-   "CHECKPOINT_FREQUENCY" : 20,
+   "TEST_FREQUENCY" : 50,
+   "CHECKPOINT_FREQUENCY" : 50,
    "BATCH_SIZE" : 64},
 
  "GECO_loss" : {
