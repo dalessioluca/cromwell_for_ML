@@ -48,12 +48,18 @@ def flatten_dict(dd, separator='_', prefix=''):
 
 def save_obj(obj, path):
     with open(path, 'wb') as f:
-        torch.save(obj, f, pickle_protocol=2, _use_new_zipfile_serialization=True)
+        torch.save(obj, f, 
+                pickle_module=<module 'pickle' from '/opt/conda/lib/python3.6/pickle.py'>,
+                pickle_protocol=2, 
+                _use_new_zipfile_serialization=True)
 
 
 def load_obj(path):
     with open(path, 'rb') as f:
-        return torch.load(f)
+        return torch.load(f, 
+                pickle_module=<module 'pickle' from '/opt/conda/lib/python3.6/pickle.py'>,
+                pickle_protocol=2, 
+                _use_new_zipfile_serialization=True)
 
 
 def load_json_as_dict(path):
