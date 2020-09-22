@@ -1,5 +1,18 @@
 # cromwell_for_ML
-This is a wrapper around cromwell and WDL to enable you to run ML model at scale. \
+Cromwell_for_ML leverages cromwell, WDL and Neptune to train Machine Learning model at scale and nicely log the results for nice visualization and comparison. 
+Possible use cases include hyperparameter optimization and code development when multiple experiments are required.
+
+# Setup
+To work you need to install both cromshell and Neptune.
+
+## Neptune
+1. Visit the website *https://neptune.ai/* and sign-up for a free account (sign-up bottom is in the top-right)
+2. Run the jupyter notebook *./cromwell_for_ML/AUXILIARY_FILES/test_neptune.ipynb*
+3. If notebook executes sucesfully, then Neptune is installed and workingly properly
+
+## Cromshell/Cromwell
+1. *cromshell list -u -c*
+
 
 # Use cases
 The user is developing a ML model and has an active git repository. 
