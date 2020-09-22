@@ -9,8 +9,8 @@ In practice the solution boils down to running the command:
 
 where:
 1. _*submit_neptune_ml.sh*_ is a wrapper around cromshell
-2. _*neptune_ml.wdl*_ is a WDL which specify the following operation: \
-	a. turn on/off VM machine \
+2. _*neptune_ml.wdl*_ is a WDL which specifies the following operations: \
+	a. turn on a VM machine \
 	b. checkout the correct version of the code from the github repository \
 	c. launch the training of ML model 
 3. _*WDL_parameters.json*_ contains few parameter such as the name of the git repository, and commit to use
