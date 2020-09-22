@@ -1,6 +1,8 @@
 # cromwell_for_ML
-Cromwell_for_ML leverages cromwell, WDL and Neptune to train Machine Learning model at scale and nicely log the results for nice visualization and comparison. 
-Possible use cases include hyperparameter optimization and code development when multiple experiments are required.
+Cromwell_for_ML leverages *cromwell*, *WDL* and *Neptune* to train Machine Learning model at scale and nicely log the results for nice visualization and comparison. 
+Possible use cases include:
+1. hyperparameter optimization a
+2. code development when multiple experiments are required.
 
 # Setup
 To work you need to install both cromshell and Neptune.
@@ -11,7 +13,11 @@ To work you need to install both cromshell and Neptune.
 3. If notebook executes sucesfully, then Neptune is installed and workingly properly
 
 ## Cromshell/Cromwell
-1. *cromshell list -u -c*
+1. Install *cromshell* (follow the instruction here: *https://github.com/broadinstitute/cromshell*)
+2. If working remotely, connect to the Cisco Split-Tunnel VPN 
+
+![split_VPN.png](split_VPN.png)
+*cromshell list -u -c*
 
 
 # Use cases
