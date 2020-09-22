@@ -56,7 +56,7 @@ exit_with_success() {
 
 template_wdl_json() {
   echo -e ""
-  echo -e "template for $WDL_JSON"
+  echo -e "Based on $WDL the template for $WDL_JSON is:"
   womtool inputs $WDL | sed '/ML_parameters/d'
 }
 
@@ -87,17 +87,12 @@ while [[ $# -gt 0 ]]; do
 			exit 1
 			;;
 		*) # positional
-			POSITIONAL="$POSITIONAL $1" # save it in an array for later
+			if [[ $1 == *.wdl ]]; then WDL=$1; fi
+			if [[ $1 == *.json ]]; then WDL_JSON=$1; fi
 			shift 
 			;;
 	esac
 done  # end of while loop
-
-for i in "${POSITIONAL[@]}"
-do
-   if [[ $i == *.wdl ]]; then WDL=$i; fi
-   if [[ $i == *.json ]]; then WDL_JSON=$i; fi
-done
 
 # At this point I have these trhee values:
 echo "Current values: -->" $WDL $WDL_JSON $ML_JSON $BUCKET
