@@ -81,30 +81,38 @@ _Congrats you have trained your first ML model using *cromshell* and *Neptune*_
 
 
 ## How to use cromwell_for_ML to train YOUR model 
-At the end of the day, you are going to run the command: 
-*./submit_neptune_ml.sh neptune_ml.wdl WDL_parameters.json --ml ML_parameters.json* \
+At the end of the day, you are going to run the command: \
+> *./submit_neptune_ml.sh neptune_ml.wdl WDL_parameters.json --ml ML_parameters.json* 
 
-The file *neptune_ml.wdl* describes all operations which will happen on the VM. Namely:
+The file _*neptune_ml.wdl*_ describes all operations which will happen on the VM. Namely:
 
 1. localization of files
 2. checking out the correct version of the code
 3. running the python code
 
-You can freely modify this code. For example you might want to localize more or less files or run a different python command. 
-Changes to *neptune_ml.wdl* might require changes to *WDL_parameters.json*. 
-Run the command:
-> submit_neptune_ml.sh -t \
-to see the template *WDL_parameters.json* for your modified 
+FROM HERE
 
-The *WDL_parameters.json* contains:
+
+You can freely modify this code. For example you might want to localize fewer files or run a different python command. 
+Changes to _*neptune_ml.wdl*_ might require changes to _*WDL_parameters.json*_. 
+To see a template for the _*WDL_parameters.json*_ run the command: \
+> *submit_neptune_ml.sh neptune_ml.wdl -t*
+
+The _*WDL_parameters.json*_ contains:
 1. the name of the git repository and commit you want to checkout 
-2. the _locations_ of all files you want to localize from google buckets to VM machine. Among these file you always need the *credentials.json* (containing the NEPTUNE_API_TOKEN). You might or might not need the *data_train.pt* and *data_test.pt* files.  
+2. the _locations_ of all files you want to localize from google buckets to VM machine. Among these file you always need the _*credentials.json*_ (containing the NEPTUNE_API_TOKEN). You might or might not need the _*data_train.pt*_ and _*data_test.pt*_ files.  
 
-The *ML_parameters.json* contains all the parameters for training your ML model. It will be automagically appear on the VM machine. It is up to you to make sure that your code reads and makes good use of the file *ML_parameters.json*
+The _*ML_parameters.json*_ contains all the parameters for training your ML model. It will be automagically appear on the VM machine. It is up to you to make sure that your code reads and makes good use of the file _*ML_parameters.json*_. It is also you responsability to make sure that your code python/pytorch code makes calls to the neptune api to log the quantity of interest. You can see some examples in:
+1. *AUXILIARY_FILES/TEMPLATE/template.ipynb*
+2. *main.py*
+
+
 
 ### Usefull commands:
-cromshell list -c -u -> to check the status of the submitted runs
-cromshell metadata ---> to retrive the the metadata of the last run. In particular the location of all log files 
-cromshell status -----> retrive the status of the last run
+cromshell list -c -u -> to check the status of the submitted runs \
+cromshell metadata ---> to retrive the the metadata of the last run. In particular the location of all log files \
+cromshell status -----> retrive the status of the last run \
+submit_neptune_ml.sh neptune_ml.wdl -t --> to see the template ....
+
 
 
