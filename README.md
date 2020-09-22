@@ -35,22 +35,18 @@ To work you need to install both cromshell and Neptune.
 3. Modify the file *AUXILIARY_FILES/test.json* to reflect your *NEPTUNE_API_TOKEN* and your *NEPTUNE_PROJECT* 
 (use the same values you used in *AUXILIARY_FILES/test_neptune.ipynb*)
 4. run the commands:
-> *cd AUXILIARY_FILES*
-> *cromshell submit test.wdl test.json*
-> *cromshell list -u -c*
+> *cd AUXILIARY_FILES* \
+> *cromshell submit test.wdl test.json* \
+> *cromshell list -u -c* \
 you should see a list of all the runs submitted by cromshell. The last line should look like this:
-![cromshell_list_test.png](AUXILIARY_FILES/cromshell_list_test.png)
+![cromshell_list_test.png](https://github.com/dalessioluca/cromwell_for_ML/blob/master/AUXILIARY_FILES/PNG/cromshell_list_test.png)
 6. repeat the command *cromshell list -u -c* till you see the job has completed. 
 At that point log into the neptune website *https://neptune.ai/* to see the results. 
-
-Test the cromshell by running the command:
-> *cromshell list -u -c*
-If the turtles moves then cromshell is working correctly.
 
 ### Cromshell and Neptune together
 We are now going to use *cromshell* and *Neptune* to train a non-trivial ML model and log the results.
 The conceptual overview is:
-1. Cromshell will start a google Virtual Machine (VM) and localize all relevant files from google buckets to VM
+1. Cromshell will start a google Virtual Machine (VM) and localize all relevant files from google buckets to the VM 
 2. on the VM we will checkout a github repo, and run the code *python main.py* which uses all the files we have localized to train a ML model
 3. Neptune will log the metric
 4. Cromshell turns of the VM
