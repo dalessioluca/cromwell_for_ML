@@ -14,7 +14,7 @@ where:
 	b. checkout the correct version of the code from the github repository \
 	c. launch the training of ML model \
 	d. turn off the VM machine
-3. _*WDL_parameters.json*_ contains few parameter such as the name of the git repository, and commit to use
+3. _*WDL_parameters.json*_ contains few parameters such as the name of the git repository, and commit to use
 4. _*ML_parameters.json*_ is a file with all the parameters necessary to specify the ML_model (learning_rate, etc)
 
 In many situations the users should be able to only change the values in the _*WDL_parameters.json*_ and _*ML_parameters.json*_ to make the code run.
@@ -56,15 +56,17 @@ The conceptual overview is:
 #### Preparation (one-time):
 1. modify the first line of the file *SUBMIT/ML_parameters.json"* to reflect *your_neptune_username*,
 1. modify the file */SUBMIT/LOCALIZED_FILES/credentials.json* by writing your own *NEPTUNE_API_TOKEN*
-2. copy the files */SUBMIT/LOCALIZED_FILES/data_train.pt*, */SUBMIT/LOCALIZED_FILES/data_test.pt* and */SUBMIT/LOCALIZED_FILES/credentials.json* to your own google bucket:
-> *gsutil -m cp SUBMIT/LOCALIZED_FILES/data_train.pt gs://my_bucket/data_train.pt*
-> *gsutil -m cp SUBMIT/LOCALIZED_FILES/data_test.pt gs://my_bucket/data_test.pt*
+2. copy the files */SUBMIT/LOCALIZED_FILES/data_train.pt*, */SUBMIT/LOCALIZED_FILES/data_test.pt* and */SUBMIT/LOCALIZED_FILES/credentials.json* to your own google bucket, i.e.: 
+
+> *gsutil -m cp SUBMIT/LOCALIZED_FILES/data_train.pt gs://my_bucket/data_train.pt* \
+> *gsutil -m cp SUBMIT/LOCALIZED_FILES/data_test.pt gs://my_bucket/data_test.pt* \
 > *gsutil -m cp SUBMIT/LOCALIZED_FILES/credentials.json gs://my_bucket/credentials.json*
 
 3. modify the file */SUBMIT/WDL_parameters.json* to reflect the location where you copied the files *data_train.pt*, *data_train.pt* and *credentials.json* 
 4. modify the first line on the file */SUBMIT/submit_neptune_ml.sh* to set your own google_bucket as the *DEFAULT_BUCKET*
 
 Now we can finally train a ML model on the cloud and track all metrics using Neptune.
+
 > *cd cromwell_for_ML/SUBMIT* \
 > *./submit_neptune_ml.sh neptune_ml.wdl WDL_parameters.json --ml ML_parameters.json* \
 > *cromshell list -u -c* 
@@ -83,9 +85,11 @@ At the end of the day, you are going to run the command:
 *./submit_neptune_ml.sh neptune_ml.wdl WDL_parameters.json --ml ML_parameters.json* \
 
 The file *neptune_ml.wdl* describes all operations which will happen on the VM. Namely:
+
 1. localization of files
 2. checking out the correct version of the code
 3. running the python code
+
 You can freely modify this code. For example you might want to localize more or less files or run a different python command. 
 Changes to *neptune_ml.wdl* might require changes to *WDL_parameters.json*. 
 Run the command:
