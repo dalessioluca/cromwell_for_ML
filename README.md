@@ -35,11 +35,12 @@ To work you need to install both cromshell and Neptune.
 3. Modify the file *AUXILIARY_FILES/test.json* to reflect your *NEPTUNE_API_TOKEN* and your *NEPTUNE_PROJECT* 
 (use the same values you used in *AUXILIARY_FILES/test_neptune.ipynb*)
 4. run the commands:
-> *cd AUXILIARY_FILES* \
+> *cd cromwell_for_ML/SUBMIT* \
 > *cromshell submit test.wdl test.json* \
 > *cromshell list -u -c* \
-you should see a list of all the runs submitted by cromshell. The last line should look like this:
-![cromshell_list_test.png](https://github.com/dalessioluca/cromwell_for_ML/blob/master/AUXILIARY_FILES/PNG/cromshell_list_test.png)
+
+You should see a list of all the runs submitted by cromshell. The last line should look like this:
+![cromshell_list_test.png](https://github.com/dalessioluca/cromwell_for_ML/blob/master/AUXILIARY_FILES/PNG/cromshell_list_test.png?raw=true)
 6. repeat the command *cromshell list -u -c* till you see the job has completed. 
 At that point log into the neptune website *https://neptune.ai/* to see the results. 
 
@@ -52,31 +53,28 @@ The conceptual overview is:
 4. Cromshell turns of the VM
 
 #### Preparation (one-time):
-1. modify the first line of the file *AUXILIARY_FILES/ML_parameters.json"* to reflect *your_neptune_username*,
-1. modify the file */AUXILIARY_FILES/credentials.json* by writing your own *NEPTUNE_API_TOKEN*
-2. copy the files */AUXILIARY_FILES/data_train.pt*, */AUXILIARY_FILES/data_test.pt* and */AUXILIARY_FILES/credentials.json* to your own google bucket
-3. modify the file */AUXILIARY_FILES/WDL_parameters.json* to reflect the location where you copied the files *data_train.pt*, *data_train.pt* and *credentials.json* 
-4. modify the first line on the file */AUXILIARY_FILES/submit_neptune_ml.sh* to set your own google_bucket as the *DEFAULT_BUCKET*
+1. modify the first line of the file *SUBMIT/ML_parameters.json"* to reflect *your_neptune_username*,
+1. modify the file */SUBMIT/credentials.json* by writing your own *NEPTUNE_API_TOKEN*
+2. copy the files */SUBMIT/data_train.pt*, */SUBMIT/data_test.pt* and */SUBMIT/credentials.json* to your own google bucket
+3. modify the file */SUBMIT/WDL_parameters.json* to reflect the location where you copied the files *data_train.pt*, *data_train.pt* and *credentials.json* 
+4. modify the first line on the file */SUBMIT/submit_neptune_ml.sh* to set your own google_bucket as the *DEFAULT_BUCKET*
 
 Now we can finally train a ML model on the cloud and track all metrics using Neptune.
-1. Navigate to the directory *AUXILIARY_FILES*
-2. run the command:
-> *./submit_neptune_ml.sh neptune_ml.wdl WDL_parameters.json --ml ML_parameters.json*
-3. run the command:
-> *cromshell list -u -c*
+> *cd cromwell_for_ML/SUBMIT* \
+> *./submit_neptune_ml.sh neptune_ml.wdl WDL_parameters.json --ml ML_parameters.json* \
+> *cromshell list -u -c* 
+
 The last row should list the run you just submitted and look like this (but listed as "Running" not "Succeded"):
-![cromshell_list](./AUXILIARY_FILES/PNG/cromshell_list_test.png)
-4. Log into the Neptune website and see your results streaming in. After a while your results should look like this:
-![logged_metric](./AUXILIARY_FILES/PNG/logged_metric.png)
+![cromshell_list](https://github.com/dalessioluca/cromwell_for_ML/blob/master/AUXILIARY_FILES/PNG/cromshell_list_big_run.png?raw=true)
+
+5. Log into the Neptune website and see your results streaming in. After a while your results should look like this:
+![logged_metric](https://github.com/dalessioluca/cromwell_for_ML/blob/master/AUXILIARY_FILES/PNG/logged_metric.png?raw=true)
+
+_Congrats you have trained your first ML model using *cromshell* and *Neptune*_ 
 
 
-#----------------------------------
+## How to use cromwell_for_ML to train YOUR model 
 
-FROM HERE:
-1. sample_WDL and with sample submission
-2. how to use it for you own code
-# Use case
-Now that we have tested that everything works correctly you can train your own ML model.
 
 
 ### Sample run
