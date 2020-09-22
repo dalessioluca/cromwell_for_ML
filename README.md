@@ -4,7 +4,7 @@ Possible use cases include:
 1. hyperparameter optimization 
 2. code development when multiple experiments are required.
 
-In practice the solution boild down to running the command: 
+In practice the solution boils down to running the command: 
 > *./submit_neptune_ml.sh neptune_ml.wdl WDL_parameters.json --ml ML_parameters.json*
 
 where:
