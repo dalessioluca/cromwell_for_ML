@@ -15,10 +15,10 @@ To work you need to install both cromshell and Neptune.
 ## Cromshell/Cromwell
 1. Install *cromshell* (follow the instruction here: *https://github.com/broadinstitute/cromshell*)
 2. If working remotely, connect to the Cisco Split-Tunnel VPN 
-
-![split_VPN.png](split_VPN.png)
-*cromshell list -u -c*
-
+![split_VPN.png](/Users/ldalessi/Desktop/split_VPN.png)
+3. Test the cromshell by running the command:
+> *cromshell list -u -c*
+If the turtles moves then cromshell is working correctly.
 
 # Use cases
 The user is developing a ML model and has an active git repository. 
