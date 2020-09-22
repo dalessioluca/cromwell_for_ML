@@ -15,20 +15,32 @@ where:
 	c. launch the training of ML model
 3. *WDL_parameters.json* contains few parameter such the name of the git repository, and commit to use
 4. *ML_parameters.json* is a file with all the parameters necessary to specify the ML_model
+In many situations the users should be able to only change the values in the *WDL_parameters.json* and *ML_parameters.json* to make the code run.
 
 # Setup
 To work you need to install both cromshell and Neptune.
 
 ## Neptune
 1. Visit the website *https://neptune.ai/* and sign-up for a free account (sign-up bottom is in the top-right)
-2. Run the jupyter notebook *./cromwell_for_ML/AUXILIARY_FILES/test_neptune.ipynb*
+2. Run the jupyter notebook *AUXILIARY_FILES/test_neptune.ipynb*
 3. If notebook executes sucesfully, then Neptune is installed and workingly properly
 
 ## Cromshell/Cromwell
 1. Install *cromshell* (follow the instruction here: *https://github.com/broadinstitute/cromshell*)
 2. If working remotely, connect to the Cisco Split-Tunnel VPN 
 ![split_VPN.png](AUXILIARY_FILES/split_VPN.png)
-3. Test the cromshell by running the command:
+3. Modify the file *AUXILIARY_FILES/test.json* to reflect your *NEPTUNE_API_TOKEN* and your *NEPTUNE_PROJECT* 
+(use the same values you used in *AUXILIARY_FILES/test_neptune.ipynb*)
+4. run the commands:
+> *cd AUXILIARY_FILES*
+> *cromshell submit test.wdl test.json*
+> *cromshell list -u -c*
+you should see a list of all the runs submitted by cromshell. The last line should look like this:
+![cromshell_list_test.png](AUXILIARY_FILES/cromshell_list_test.png)
+6. repeat the command *cromshell list -u -c* till you see the job has completed. 
+At that point log into the neptune website *https://neptune.ai/* to see the results. 
+
+Test the cromshell by running the command:
 > *cromshell list -u -c*
 If the turtles moves then cromshell is working correctly.
 
