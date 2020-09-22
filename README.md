@@ -29,7 +29,9 @@ To work you need to install both cromshell and Neptune.
 ### Cromshell/Cromwell
 1. Install *cromshell* (follow the instruction here: *https://github.com/broadinstitute/cromshell*)
 2. If working remotely, connect to the Cisco Split-Tunnel VPN 
-![split_VPN.png](AUXILIARY_FILES/split_VPN.png)
+![split_VPN.png](https://github.com/dalessioluca/cromwell_for_ML/blob/master/AUXILIARY_FILES/PNG/split_VPN.png?raw=true)
+
+
 3. Modify the file *AUXILIARY_FILES/test.json* to reflect your *NEPTUNE_API_TOKEN* and your *NEPTUNE_PROJECT* 
 (use the same values you used in *AUXILIARY_FILES/test_neptune.ipynb*)
 4. run the commands:
