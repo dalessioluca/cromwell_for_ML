@@ -67,9 +67,9 @@ Now we can finally train a ML model on the cloud and track all metrics using Nep
 3. run the command:
 > *cromshell list -u -c*
 The last row should list the run you just submitted and look like this (but listed as "Running" not "Succeded"):
-![cromshell_list.png](AUXILIARY_FILES/PNG/cromshell_list_test.png)
+![cromshell_list](./AUXILIARY_FILES/PNG/cromshell_list_test.png)
 4. Log into the Neptune website and see your results streaming in. After a while your results should look like this:
-![logged_metric.png](AUXILIARY_FILES/PNG/logged_metric.png)
+![logged_metric](./AUXILIARY_FILES/PNG/logged_metric.png)
 
 
 #----------------------------------
