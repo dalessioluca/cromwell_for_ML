@@ -13,19 +13,20 @@ where:
 	a. turn on/off VM machine \
 	b. checkout the correct version of the code from the github repository \
 	c. launch the training of ML model 
-3. *WDL_parameters.json* contains few parameter such the name of the git repository, and commit to use
+3. *WDL_parameters.json* contains few parameter such as the name of the git repository, and commit to use
 4. *ML_parameters.json* is a file with all the parameters necessary to specify the ML_model (learning_rate, etc)
+
 In many situations the users should be able to only change the values in the *WDL_parameters.json* and *ML_parameters.json* to make the code run.
 
-# Setup
+## Setup
 To work you need to install both cromshell and Neptune.
 
-## Neptune
+### Neptune
 1. Visit the website *https://neptune.ai/* and sign-up for a free account (sign-up bottom is in the top-right)
 2. Run the jupyter notebook *AUXILIARY_FILES/TEST/test.ipynb*
 3. If notebook executes sucesfully, then Neptune is installed and workingly properly
 
-## Cromshell/Cromwell
+### Cromshell/Cromwell
 1. Install *cromshell* (follow the instruction here: *https://github.com/broadinstitute/cromshell*)
 2. If working remotely, connect to the Cisco Split-Tunnel VPN 
 ![split_VPN.png](AUXILIARY_FILES/split_VPN.png)
@@ -44,7 +45,7 @@ Test the cromshell by running the command:
 > *cromshell list -u -c*
 If the turtles moves then cromshell is working correctly.
 
-## Cromshell and Neptune together
+### Cromshell and Neptune together
 We are now going to use *cromshell* and *Neptune* to train a non-trivial ML model and log the results.
 The conceptual overview is:
 1. Cromshell will start a google Virtual Machine (VM) and localize all relevant files from google buckets to VM
@@ -52,7 +53,7 @@ The conceptual overview is:
 3. Neptune will log the metric
 4. Cromshell turns of the VM
 
-### Preparation (one-time):
+#### Preparation (one-time):
 1. modify the first line of the file *AUXILIARY_FILES/ML_parameters.json"* to reflect *your_neptune_username*,
 1. modify the file */AUXILIARY_FILES/credentials.json* by writing your own *NEPTUNE_API_TOKEN*
 2. copy the files */AUXILIARY_FILES/data_train.pt*, */AUXILIARY_FILES/data_test.pt* and */AUXILIARY_FILES/credentials.json* to your own google bucket
