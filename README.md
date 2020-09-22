@@ -8,15 +8,15 @@ In practice the solution boild down to running the command:
 > *./submit_neptune_ml.sh neptune_ml.wdl WDL_parameters.json --ml ML_parameters.json*
 
 where:
-1. *submit_neptune_ml.sh* is a wrapper around cromshell
-2. *neptune_ml.wdl* is a WDL which specify the following operation: \
+1. _*submit_neptune_ml.sh*_ is a wrapper around cromshell
+2. _*neptune_ml.wdl*_ is a WDL which specify the following operation: \
 	a. turn on/off VM machine \
 	b. checkout the correct version of the code from the github repository \
 	c. launch the training of ML model 
-3. *WDL_parameters.json* contains few parameter such as the name of the git repository, and commit to use
-4. *ML_parameters.json* is a file with all the parameters necessary to specify the ML_model (learning_rate, etc)
+3. _*WDL_parameters.json*_ contains few parameter such as the name of the git repository, and commit to use
+4. _*ML_parameters.json*_ is a file with all the parameters necessary to specify the ML_model (learning_rate, etc)
 
-In many situations the users should be able to only change the values in the *WDL_parameters.json* and *ML_parameters.json* to make the code run.
+In many situations the users should be able to only change the values in the _*WDL_parameters.json*_ and _*ML_parameters.json*_ to make the code run.
 
 ## Setup
 To work you need to install both cromshell and Neptune.
@@ -32,10 +32,10 @@ To work you need to install both cromshell and Neptune.
 ![split_VPN.png](https://github.com/dalessioluca/cromwell_for_ML/blob/master/AUXILIARY_FILES/PNG/split_VPN.png?raw=true)
 
 
-3. Modify the file *AUXILIARY_FILES/test.json* to reflect your *NEPTUNE_API_TOKEN* and your *NEPTUNE_PROJECT* 
+3. Modify the file *AUXILIARY_FILES/TEST/test.json* to reflect your *NEPTUNE_API_TOKEN* and your *NEPTUNE_PROJECT* 
 (use the same values you used in *AUXILIARY_FILES/test_neptune.ipynb*)
 4. run the commands:
-> *cd cromwell_for_ML/SUBMIT* \
+> *cd cromwell_for_ML/TEST* \
 > *cromshell submit test.wdl test.json* \
 > *cromshell list -u -c* \
 
@@ -54,8 +54,8 @@ The conceptual overview is:
 
 #### Preparation (one-time):
 1. modify the first line of the file *SUBMIT/ML_parameters.json"* to reflect *your_neptune_username*,
-1. modify the file */SUBMIT/credentials.json* by writing your own *NEPTUNE_API_TOKEN*
-2. copy the files */SUBMIT/data_train.pt*, */SUBMIT/data_test.pt* and */SUBMIT/credentials.json* to your own google bucket
+1. modify the file */SUBMIT/LOCALIZED_FILES/credentials.json* by writing your own *NEPTUNE_API_TOKEN*
+2. copy the files */SUBMIT/LOCALIZED_FILES/data_train.pt*, */SUBMIT/LOCALIZED_FILES/data_test.pt* and */SUBMIT/LOCALIZED_FILES/credentials.json* to your own google bucket
 3. modify the file */SUBMIT/WDL_parameters.json* to reflect the location where you copied the files *data_train.pt*, *data_train.pt* and *credentials.json* 
 4. modify the first line on the file */SUBMIT/submit_neptune_ml.sh* to set your own google_bucket as the *DEFAULT_BUCKET*
 
@@ -74,64 +74,28 @@ _Congrats you have trained your first ML model using *cromshell* and *Neptune*_
 
 
 ## How to use cromwell_for_ML to train YOUR model 
+At the end of the day, you are going to run the command: \ 
+*./submit_neptune_ml.sh neptune_ml.wdl WDL_parameters.json --ml ML_parameters.json* \
+
+The file *neptune_ml.wdl* describes all operations which will happen on the VM. Namely:
+1. localization of files
+2. checking out the correct version of the code
+3. running the python code
+You can freely modify this code. For example you might want to localize more or less files or run a different python command. 
+Changes to *neptune_ml.wdl* might require changes to *WDL_parameters.json*. 
+Run the command:
+> submit_neptune_ml.sh -t \
+to see the template *WDL_parameters.json* for your modified 
+
+The *WDL_parameters.json* contains:
+1. the name of the git repository and commit you want to checkout 
+2. the _locations_ of all files you want to localize from google buckets to VM machine. Among these file you always need the *credentials.json* (containing the NEPTUNE_API_TOKEN). You might or might not need the *data_train.pt* and *data_test.pt* files.  
+
+The *ML_parameters.json* contains all the parameters for training your ML model. It will be automagically appear on the VM machine. It is up to you to make sure that your code reads and makes good use of the file *ML_parameters.json*
+
+### Usefull commands:
+cromshell list -c -u -> to check the status of the submitted runs
+cromshell metadata ---> to retrive the the metadata of the last run. In particular the location of all log files 
+cromshell status -----> retrive the status of the last run
 
 
-
-### Sample run
-1. cd cromwell_for_ML
-2. ./submit_wdl_workflow.sh jupyter.wdl parameters_for_wdl.json gs://ld-results-bucket/input_jsons
-   (the first time you will be promped to specify the Cromwell server. \
-    Type: https://cromwell-v47.dsde-methods.broadinstitute.org \
-    Then run the command again)
-
-### Usage
-1. Create a github repo similar to https://github.com/dalessioluca/fashion_mnist_vae.git. \
-   In particular the jupyter notebook:\
-   a. expect a file called parameters.json in the execution_dir\
-   b. produce outputs in execution_dir/dir_output
-2. modify the file parameters_for_wdl.json accordingly:\
-   a. has few entries named "wdl.xxx" with the parameters for the wdl workflow\
-	- if "wdl.alias" is present the cromshell run will get that alias\
-	- if "wdl.bucket_output" is present the results will be copied from the default execution bucket to that bucket_output 
-   
-   b. has many other parameters with arbitrary nested structure to be read by the jupyter notebook
-   
-
-### File descirption
-1. submit_wdl_workflow.sh -> bash script which launches cromshell in a smart way
-2. jupyter.wdl -> workflow in wdl 
-3. parameters_for_wdl.json -> all the parameters that the notebook needs to run
-
-
-### Running Jupyter:
-
-Let's compare the manual workflow and the WDL empowered workflow:
-
-#### Manual Usage: 
-You:
-1. start a VM machine
-2. git pull the code from your repository
-3. copy the train_data and test_data inside the execution directory 
-4. copy the parameters.json inside the execution directory
-5. run the jupyter notebook from top-to-bottom
-6. save the results into a google bucket
-7. turn off the VM machine
-
-#### WDL Usage
-You:
-1. on local machine edit the parameters_for_wdl.json as desired
-2. run the command:\
-   submit_wdl_workflow.sh jupyter.wdl parameters_for_wdl.json gs://ld-results-bucket/input_jsons 
-
-   Here: 
-   - jupyter.wdl is the file specifying the workflow and does **not** need to be changed
-   - gs://ld-results-bucket/input_jsons is a bucket where the parameters file will be copied and the path_to_json will be passed to the workflow	
-   
-3. enjoy! The progress and results can be retieved with the commands: 
-   - cromshell list -c -u
-   - cromshell metadata
-   - cromshell status
-   
-4. After sucessfull completion the results can be found:
-   - in the cromwell execution bucket: broad-methods-cromwell-exec-bucket-v47/jupyter_localize
-   - in the output bucket if specified in the parameters.json: for example gs://ld-results-bucket
