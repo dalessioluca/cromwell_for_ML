@@ -4,6 +4,18 @@ Possible use cases include:
 1. hyperparameter optimization 
 2. code development when multiple experiments are required.
 
+In practice the solution boild down to running the command: 
+> *./submit_neptune_ml.sh neptune_ml.wdl WDL_parameters.json --ml ML_parameters.json*
+
+where:
+1. *submit_neptune_ml.sh* is a wrapper around cromshell
+2. *neptune_ml.wdl* is a WDL which specify the following operation:
+	a. turn on/off VM machine
+	b. checkout the correct version of the code from the repository
+	c. launch the training of ML model
+3. *WDL_parameters.json* contains few parameter such the name of the git repository, and commit to use
+4. *ML_parameters.json* is a file with all the parameters necessary to specify the ML_model
+
 # Setup
 To work you need to install both cromshell and Neptune.
 
@@ -20,58 +32,41 @@ To work you need to install both cromshell and Neptune.
 > *cromshell list -u -c*
 If the turtles moves then cromshell is working correctly.
 
-# Use cases
-The user is developing a ML model and has an active git repository. 
-The users need to train multiple ML models and log their performance and continously improve the codebase.
-The solution is:
-1. use WDL and CROMWELL to manage the VMs (i.e. turn on/off), checkout the code from git repo
-2. use NEPTUNE to log all metrics and parameter of interest to a database which can be inspected both during and after training is completed
+## Cromshell and Neptune together
+We are now going to use *cromshell* and *Neptune* to train a non-trivial ML model and log the results.
+The conceptual overview is:
+1. Cromshell will start a google Virtual Machine (VM) and localize all relevant files from google buckets to VM
+2. on the VM we will checkout a github repo, and run the code *python main.py* which uses all the files we have localized to train a ML model
+3. Neptune will log the metric
+4. Cromshell turns of the VM
 
-In practice the solution is: 
--> ./submit_neptune_ml.sh neptune_ml.wdl WDL_parameters.json ML_parameters.json
+### Preparation (one-time):
+1. modify the first line of the file *AUXILIARY_FILES/ML_parameters.json"* to reflect *your_neptune_username*,
+1. modify the file */AUXILIARY_FILES/credentials.json* by writing your own *NEPTUNE_API_TOKEN*
+2. copy the files */AUXILIARY_FILES/data_train.pt*, */AUXILIARY_FILES/data_test.pt* and */AUXILIARY_FILES/credentials.json* to your own google bucket
+3. modify the file */AUXILIARY_FILES/WDL_parameters.json* to reflect the location where you copied the files *data_train.pt*, *data_train.pt* and *credentials.json* 
+4. modify the first line on the file */AUXILIARY_FILES/submit_neptune_ml.sh* to set your own google_bucket as the *DEFAULT_BUCKET*
 
-where:
-1. submit_neptune_ml.sh is a wrapper around cromshell
-2. neptune_ml.wdl is a WDL which specify the following operation:
-	a. turn on/off VM machine
-	b. checkout the correct version of the code from the repository
-	c. launch the training of ML model
-3. WDL_parameters.json contains few parameter such the name of the git repository, and commit to use
-4. ML_parameters.json is a file with all the parameters necessary to specify the ML_model
-
-
-. This will basic idea is that:
-1. the user has a git repository with code under development
-2. the user has either a main.ipynb or a main.py which:
-	a. reads the file ML_parameters.json with all the parameters for the training
-	b. loads the data_train.pt with the training data
-	c. loads the data_test.pt with the test data
-	d. is trained according to the parameters in ML_parameters.json
-3. in the main.ipynb or main.py the users has added few neptune log statement to store metric, parameters, etc...
-4. 
+Now we can finally train a ML model on the cloud and track all metrics using Neptune.
+1. Navigate to the directory *AUXILIARY_FILES*
+2. run the command:
+> *./submit_neptune_ml.sh neptune_ml.wdl WDL_parameters.json --ml ML_parameters.json*
+3. run the command:
+> *cromshell list -u -c*
+The last row should list the run you just submitted and look like this (but listed as "Running" not "Succeded"):
+![cromshell_list.png](AUXILIARY_FILES/cromshell_list.png)
+4. Log into the Neptune website and see your results streaming in. After a while your results should look like this:
+![logged_metric.png](AUXILIARY_FILES/logged_metric.png)
 
 
+#----------------------------------
 
+FROM HERE:
+1. sample_WDL and with sample submission
+2. how to use it for you own code
+# Use case
+Now that we have tested that everything works correctly you can train your own ML model.
 
-t runs jupyter notebook on google VM automatically 
-
-# STILL TO DO:
-1. visualization using jupyter notebook \
-(Try to do during the code challenge week)
-
-2. Maybe improve delocalization saving on a desired bucket using gsutil \
-(Not urgent but possible, just make docker with gsutil in it)
-
-3. Attach disk with data instead of localizing data from google bucket. \
-(This is currently impossible. Even if you are root you can NOT run root command such as "sudo mount" unless the docker was launched with the special flag: "--cap-add=SYS_ADMIN". See https://stackoverflow.com/questions/36553617/how-do-i-mount-bind-inside-a-docker-container. My unsuccessful attempts are in the directory: MOUNT_DISK_NO_LOCALIZATION).  
-
-### Installation
-Type the following commands:
-1. conda create --name trial python=3.6
-2. conda activate trial
-3. conda install -c conda-forge cromwell
-4. conda install -c conda-forge jq
-5. git clone https://github.com/dalessioluca/cromwell_for_ML.git
 
 ### Sample run
 1. cd cromwell_for_ML
