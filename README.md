@@ -13,7 +13,7 @@ where:
 	a. turn on a VM machine \
 	b. checkout the correct version of the code from the github repository \
 	c. launch the training of ML model \
-	d. tunr off the VM machine
+	d. turn off the VM machine
 3. _*WDL_parameters.json*_ contains few parameter such as the name of the git repository, and commit to use
 4. _*ML_parameters.json*_ is a file with all the parameters necessary to specify the ML_model (learning_rate, etc)
 
