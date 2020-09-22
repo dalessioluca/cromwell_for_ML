@@ -9,12 +9,12 @@ In practice the solution boild down to running the command:
 
 where:
 1. *submit_neptune_ml.sh* is a wrapper around cromshell
-2. *neptune_ml.wdl* is a WDL which specify the following operation:
-	a. turn on/off VM machine
-	b. checkout the correct version of the code from the repository
-	c. launch the training of ML model
+2. *neptune_ml.wdl* is a WDL which specify the following operation: \
+	a. turn on/off VM machine \
+	b. checkout the correct version of the code from the github repository \
+	c. launch the training of ML model 
 3. *WDL_parameters.json* contains few parameter such the name of the git repository, and commit to use
-4. *ML_parameters.json* is a file with all the parameters necessary to specify the ML_model
+4. *ML_parameters.json* is a file with all the parameters necessary to specify the ML_model (learning_rate, etc)
 In many situations the users should be able to only change the values in the *WDL_parameters.json* and *ML_parameters.json* to make the code run.
 
 # Setup
@@ -22,7 +22,7 @@ To work you need to install both cromshell and Neptune.
 
 ## Neptune
 1. Visit the website *https://neptune.ai/* and sign-up for a free account (sign-up bottom is in the top-right)
-2. Run the jupyter notebook *AUXILIARY_FILES/test_neptune.ipynb*
+2. Run the jupyter notebook *AUXILIARY_FILES/TEST/test.ipynb*
 3. If notebook executes sucesfully, then Neptune is installed and workingly properly
 
 ## Cromshell/Cromwell
