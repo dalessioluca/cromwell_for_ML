@@ -55,7 +55,11 @@ The conceptual overview is:
 #### Preparation (one-time):
 1. modify the first line of the file *SUBMIT/ML_parameters.json"* to reflect *your_neptune_username*,
 1. modify the file */SUBMIT/LOCALIZED_FILES/credentials.json* by writing your own *NEPTUNE_API_TOKEN*
-2. copy the files */SUBMIT/LOCALIZED_FILES/data_train.pt*, */SUBMIT/LOCALIZED_FILES/data_test.pt* and */SUBMIT/LOCALIZED_FILES/credentials.json* to your own google bucket
+2. copy the files */SUBMIT/LOCALIZED_FILES/data_train.pt*, */SUBMIT/LOCALIZED_FILES/data_test.pt* and */SUBMIT/LOCALIZED_FILES/credentials.json* to your own google bucket:
+> *gsutil -m cp SUBMIT/LOCALIZED_FILES/data_train.pt gs://my_bucket/data_train.pt*
+> *gsutil -m cp SUBMIT/LOCALIZED_FILES/data_test.pt gs://my_bucket/data_test.pt*
+> *gsutil -m cp SUBMIT/LOCALIZED_FILES/credentials.json gs://my_bucket/credentials.json*
+
 3. modify the file */SUBMIT/WDL_parameters.json* to reflect the location where you copied the files *data_train.pt*, *data_train.pt* and *credentials.json* 
 4. modify the first line on the file */SUBMIT/submit_neptune_ml.sh* to set your own google_bucket as the *DEFAULT_BUCKET*
 
@@ -74,7 +78,7 @@ _Congrats you have trained your first ML model using *cromshell* and *Neptune*_
 
 
 ## How to use cromwell_for_ML to train YOUR model 
-At the end of the day, you are going to run the command: \ 
+At the end of the day, you are going to run the command: 
 *./submit_neptune_ml.sh neptune_ml.wdl WDL_parameters.json --ml ML_parameters.json* \
 
 The file *neptune_ml.wdl* describes all operations which will happen on the VM. Namely:
