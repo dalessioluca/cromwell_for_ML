@@ -109,7 +109,6 @@ The _*ML_parameters.json*_ contains all the parameters for training your ML mode
 2. *main.py*
 
 
-
 ### Usefull commands:
 _./submit_neptune_ml.sh neptune_ml.wdl WDL_parameters.json --ml ML_parameters.json_ --> submit a run using cromshell \
 _./submit_neptune_ml.sh_ -------------------> submit a run using cromshell and the default file names \
