@@ -68,7 +68,7 @@ The conceptual overview is:
 Now we can finally train a ML model on the cloud and track all metrics using Neptune.
 
 > *cd cromwell_for_ML/SUBMIT* \
-> *./submit_neptune_ml.sh neptune_ml.wdl WDL_parameters.json --ml ML_parameters.json* 
+> *./submit_neptune_ml.sh neptune_ml.wdl WDL_parameters.json --ml ML_parameters.json* \
 > *cromshell list -u -c* 
 
 The last row should list the run you just submitted and look like this (but listed as "Running" not "Succeded"):
