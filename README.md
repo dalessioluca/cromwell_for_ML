@@ -54,7 +54,7 @@ The conceptual overview is:
 4. Cromshell turns of the VM
 
 #### Preparation (one-time):
-1. modify the first line of the file *SUBMIT/ML_parameters.json"* to reflect *your_neptune_username*,
+1. modify the _first line_ of the file *SUBMIT/ML_parameters.json* to reflect *your_neptune_username*,
 1. modify the file */SUBMIT/LOCALIZED_FILES/credentials.json* by writing your own *NEPTUNE_API_TOKEN*
 2. copy the files */SUBMIT/LOCALIZED_FILES/data_train.pt*, */SUBMIT/LOCALIZED_FILES/data_test.pt* and */SUBMIT/LOCALIZED_FILES/credentials.json* to your own google bucket, i.e.: 
 
@@ -63,12 +63,12 @@ The conceptual overview is:
 > *gsutil -m cp SUBMIT/LOCALIZED_FILES/credentials.json gs://my_bucket/credentials.json*
 
 3. modify the file */SUBMIT/WDL_parameters.json* to reflect the location where you copied the files *data_train.pt*, *data_train.pt* and *credentials.json* 
-4. modify the first line on the file */SUBMIT/submit_neptune_ml.sh* to set your own google_bucket as the *DEFAULT_BUCKET*
+4. modify the _first line_ on the file */SUBMIT/submit_neptune_ml.sh* to set your own google_bucket as the *DEFAULT_BUCKET*
 
 Now we can finally train a ML model on the cloud and track all metrics using Neptune.
 
 > *cd cromwell_for_ML/SUBMIT* \
-> *./submit_neptune_ml.sh neptune_ml.wdl WDL_parameters.json --ml ML_parameters.json* \
+> *./submit_neptune_ml.sh neptune_ml.wdl WDL_parameters.json --ml ML_parameters.json* 
 > *cromshell list -u -c* 
 
 The last row should list the run you just submitted and look like this (but listed as "Running" not "Succeded"):
