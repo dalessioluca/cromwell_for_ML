@@ -84,6 +84,9 @@ _Congrats you have trained your first ML model using *cromshell* and *Neptune*_
 At the end of the day, you are going to run the command: 
 > *./submit_neptune_ml.sh neptune_ml.wdl WDL_parameters.json --ml ML_parameters.json* 
 
+If you use the defaults file names, as in the line above, you can simply type the command:
+> *./submit_neptune_ml.sh*
+
 The file _*neptune_ml.wdl*_ describes all operations which will happen on the VM. Namely:
 
 1. localization of files
@@ -108,10 +111,10 @@ The _*ML_parameters.json*_ contains all the parameters for training your ML mode
 
 
 ### Usefull commands:
-cromshell list -c -u -> to check the status of the submitted runs \
-cromshell metadata ---> to retrive the the metadata of the last run. In particular the location of all log files \
-cromshell status -----> retrive the status of the last run \
-submit_neptune_ml.sh neptune_ml.wdl -t --> to see the template ....
+cromshell list -c -u --------------------> to check the status of the submitted runs \
+cromshell metadata ----------------------> to retrive the the metadata of the last run. In particular the location of all log files \
+cromshell status ------------------------> retrive the status of the last run \
+submit_neptune_ml.sh neptune_ml.wdl -t --> to see the template for the file _*WDL_parameters.json*_ corresponding to the current version of your WDL file.
 
 
 
