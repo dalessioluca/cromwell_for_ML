@@ -38,7 +38,7 @@ To work you need to install both cromshell and Neptune.
 4. run the commands:
 > *cd cromwell_for_ML/TEST* \
 > *cromshell submit test.wdl test.json* \
-> *cromshell list -u -c* \
+> *cromshell list -u -c* 
 
 You should see a list of all the runs submitted by cromshell. The last line should look like this:
 ![cromshell_list_test.png](https://github.com/dalessioluca/cromwell_for_ML/blob/master/AUXILIARY_FILES/PNG/cromshell_list_test.png?raw=true)
