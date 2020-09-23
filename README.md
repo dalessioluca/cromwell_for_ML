@@ -112,10 +112,11 @@ The _*ML_parameters.json*_ contains all the parameters for training your ML mode
 ### Usefull commands:
 _./submit_neptune_ml.sh neptune_ml.wdl WDL_parameters.json --ml ML_parameters.json_ --> submit a run using cromshell \
 _./submit_neptune_ml.sh_ -------------------> submit a run using cromshell and the default file names \
+_submit_neptune_ml.sh neptune_ml.wdl -t_ --> to see the template for the file _*WDL_parameters.json*_ corresponding to the current version of the WDL file *neptune_ml.wdl* \
 _cromshell list -c -u_ ------------------------> check the status of the submitted runs \
 _cromshell metadata_ -----------------------> retrive the the metadata of the last run. In particular the location of all log files \
 _cromshell status_ --------------------------> retrive the status of the last run \
-_submit_neptune_ml.sh neptune_ml.wdl -t_ --> to see the template for the file _*WDL_parameters.json*_ corresponding to the current version of the WDL file *neptune_ml.wdl*.
+
 
 
 
