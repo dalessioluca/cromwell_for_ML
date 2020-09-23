@@ -81,7 +81,7 @@ _Congrats you have trained your first ML model using *cromshell* and *Neptune*_
 
 
 ## How to use cromwell_for_ML to train YOUR model 
-At the end of the day, you are going to run the command: \
+At the end of the day, you are going to run the command: 
 > *./submit_neptune_ml.sh neptune_ml.wdl WDL_parameters.json --ml ML_parameters.json* 
 
 The file _*neptune_ml.wdl*_ describes all operations which will happen on the VM. Namely:
@@ -90,19 +90,18 @@ The file _*neptune_ml.wdl*_ describes all operations which will happen on the VM
 2. checking out the correct version of the code
 3. running the python code
 
-FROM HERE
-
-
 You can freely modify this code. For example you might want to localize fewer files or run a different python command. 
 Changes to _*neptune_ml.wdl*_ might require changes to _*WDL_parameters.json*_. 
-To see a template for the _*WDL_parameters.json*_ run the command: \
+Run the command: \ 
 > *submit_neptune_ml.sh neptune_ml.wdl -t*
+
+to see a template for the file _*WDL_parameters.json*_ 
 
 The _*WDL_parameters.json*_ contains:
 1. the name of the git repository and commit you want to checkout 
 2. the _locations_ of all files you want to localize from google buckets to VM machine. Among these file you always need the _*credentials.json*_ (containing the NEPTUNE_API_TOKEN). You might or might not need the _*data_train.pt*_ and _*data_test.pt*_ files.  
 
-The _*ML_parameters.json*_ contains all the parameters for training your ML model. It will be automagically appear on the VM machine. It is up to you to make sure that your code reads and makes good use of the file _*ML_parameters.json*_. It is also you responsability to make sure that your code python/pytorch code makes calls to the neptune api to log the quantity of interest. You can see some examples in:
+The _*ML_parameters.json*_ contains all the parameters for training your ML model. It will be _automagically_ appear on the VM machine. It is up to you to make sure that your code reads and makes good use of the file _*ML_parameters.json*_. It is also you responsability to make sure that your python/pytorch code makes calls to the neptune api to log the quantity of interest. You can see some examples of how to use these calls is:
 1. *AUXILIARY_FILES/TEMPLATE/template.ipynb*
 2. *main.py*
 
