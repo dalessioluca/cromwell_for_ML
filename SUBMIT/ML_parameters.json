@@ -1,5 +1,5 @@
 {
- "neptune_project" : "your_neptune_username/sandbox",
+ "neptune_project" : "CellBender/sandbox",
  
  "architecture" : {
    "__comment" : "parameters specifying the architecture of the model",
