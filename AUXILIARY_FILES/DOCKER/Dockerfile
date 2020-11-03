@@ -1,5 +1,5 @@
 # The image corresponding to this dosckerfile can be obtained by 
-#docker pull us.gcr.io/broad-dsde-methods/pyro_matplotlib:0.0.6
+#docker pull us.gcr.io/broad-dsde-methods/pyro_matplotlib:0.0.7
 
 FROM nvidia/cuda:10.2-base-ubuntu18.04
 
@@ -44,3 +44,4 @@ RUN yes | pip install leidenalg==0.8.1
 RUN yes | pip install neptune-contrib
 RUN yes | pip install --upgrade Pillow
 RUN yes | pip install pyro-ppl==1.4.0
+RUN yes | pip install ipython==7.13.0 
