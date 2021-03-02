@@ -22,12 +22,13 @@ display_help() {
   echo -e " Submit wdl workflow using cromshell."
   echo -e ""
   echo -e " Example usage:"
-  echo -e "   $SCRIPTNAME $WDL $WDL_JSON --ml $ML_JSON -b $BUCKET"
+  echo -e "   $SCRIPTNAME $WDL --wdl $WDL_JSON --ml $ML_JSON -b $BUCKET"
   echo -e "   $SCRIPTNAME -h"
   echo -e ""
   echo -e " Supported Flags:"
   echo -e "   -h or --help     Display this message"
   echo -e "   -m or --ml       Name of json file with all the parameters of the ML model. This file will be provided as-is to pytorch code"
+  echo -e "   -w or --wdl      Name of json file with all the parameters for the WDL." 
   echo -e "   -b or --bucket   Name of google bucket where local files will be copied (VM will then localize those files)"
   echo -e "   -t or --template Show the template for $WDL_JSON" 
   echo -e ""
@@ -63,33 +64,41 @@ template_wdl_json() {
 #--------------------------------------
 # 1. read inputs from command line
 #--------------------------------------
-POSITIONAL=""
+
 while [[ $# -gt 0 ]]; do
 	case "$1" in
 		-h|--help)
+			echo "here"
 			display_help
 			exit 0
 			;;
+		-w|--wdl)
+			WDL_JSON=$2
+			shift 2
+			;;
 		-m|--ml)
 			ML_JSON=$2
-			shift
+			shift 2
 			;;
 		-b|--bucket)
 			BUCKET=$2
-			shift
+			shift 2
 			;;
 		-t|--template)
 			template_wdl_json
 			exit 0
 			;;
-		-*|--*=) # unknown option
+		-*|--*) # unknown option
 			echo "ERROR: Unsupported flag $1"
 			exit 1
 			;;
-		*) # positional
-			if [[ $1 == *.wdl ]]; then WDL=$1; fi
-			if [[ $1 == *.json ]]; then WDL_JSON=$1; fi
-			shift 
+		*.wdl) # wdl workflow
+			WDL=$1
+			shift 1
+			;;
+		*)
+			echo "ERROR: Unrecognized option $1"
+			exit 1
 			;;
 	esac
 done  # end of while loop
