@@ -116,7 +116,7 @@ gsutil cp $ML_JSON $ML_JSON_CLOUD
 # 2. create the json file which will be passed to cromshell
 echo
 echo "Step2: crerating input.json file for cromshell"
-key_for_ML_parameters=$(womtool inputs neptune_ml.wdl | jq 'keys[]' | grep "ML_par")
+key_for_ML_parameters=$(womtool inputs $WDL | jq 'keys[]' | grep "ML_par")
 echo '{' "$key_for_ML_parameters" : '"'"$ML_JSON_CLOUD"'" }' > tmp.json
 jq -s '.[0] * .[1]' tmp.json $WDL_JSON | tee input.json
 rm -rf tmp.json
