@@ -1,5 +1,8 @@
 version 1.0
-
+ 
+# Note that cromshell will automatically localize file in the following way:
+# gs://ld-data-bucket/data/fashionmnist_test.pkl -> /cromwell_roo/data/fashionmnist_test.pkl
+ 
 task test {
     input {
         String neptune_api_token 
@@ -9,22 +12,20 @@ task test {
     command <<<
         pip install neptune-client
         export NEPTUNE_API_TOKEN="~{neptune_api_token}"
-
-        python <<<CODE
+        
+        python <<CODE
         
         import neptune
         
-        NEPTUNE_PROJECT=~{neptune_project}
-        print(NEPTUNE_PROJECT)
-#        neptune.set_project("NEPTUNE_PROJECT")
-#        exp = neptune.create_experiment()
-# 
-#        x = 1.0
-#        for n in range(100):
-#            exp.log_metric('x', x)
-#            x *= 0.9
-# 
-#        exp.stop()
+        neptune.set_project("~{neptune_project}")
+        exp = neptune.create_experiment()
+ 
+        x = 1.0
+        for n in range(100):
+            exp.log_metric('x', x)
+            x *= 0.9
+ 
+        exp.stop()
         CODE
     >>>
     
