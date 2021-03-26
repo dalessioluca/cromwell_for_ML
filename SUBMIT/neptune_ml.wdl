@@ -25,13 +25,6 @@ task train {
         neptune_token=$(cat ~{credentials_json} | grep -o '"NEPTUNE_API_TOKEN"\s*:\s*"[^"]*"' | grep -o '"[^"]*"$')
         export NEPTUNE_API_TOKEN=$neptune_token
 
-        # 1. checkout the repo in the checkout_dir
-        git clone ~{git_repo} ./checkout_dir
-        cd ./checkout_dir
-        git checkout ~{git_branch_or_commit}
-        echo "AFTER GIT --> Content of checkout dir"
-        echo $(ls)
-        
         # 2. clone the repository in the checkout_dir
         # for public repository use:
         git clone ~{git_repo} ./checkout_dir
@@ -41,6 +34,12 @@ task train {
         # github_token=$(cat ~{credentials_json} | grep -o '"GITHUB_API_TOKEN"\s*:\s*"[^"]*"' | grep -o '"[^"]*"$' | sed 's/"//g')
         # git_repo_with_token=$(echo ~{git_repo} | sed "s/github/$github_token@github/")
         # git clone $git_repo_with_token ./checkout_dir
+        
+        # 3. checkout the correct branch
+        cd ./checkout_dir
+        git checkout ~{git_branch_or_commit}
+        echo "AFTER GIT --> Content of checkout dir"
+        echo $(ls)
        
         # 3. link the file which have been localized to the checkout_dir
         # and give them the name the main.py expects
